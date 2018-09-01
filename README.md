@@ -1,4 +1,4 @@
-#COMP354
+# COMP354
 
 ## Assignment 1
 
