@@ -16,7 +16,7 @@ def div(x,y):
 
 	while y<= remainder:
 		remainder -= y
-		quotient++
+		quotient += 1
 		
 return quotient, remainder
 
