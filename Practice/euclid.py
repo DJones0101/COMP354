@@ -2,7 +2,6 @@
 # Darius Jones
 # 9/9/2018
 # COMP 354
-# 1.2
 
 
 
@@ -10,8 +9,7 @@ def gcd(a, b):
 
 	#check preconditons
 	if a < 0 and b < 0 and a != int(a) and b != int(b):
-		print("Invalid input")
-		return
+		raise Valueerror("Invalid input")
 
 	m = a
 	n = b
@@ -28,6 +26,3 @@ a = 56
 b = 15
 
 print("a = " + str(a) +" b = " + str(b) + " gcd = " + str(gcd(a,b)))
-
-
-
