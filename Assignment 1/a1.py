@@ -11,8 +11,8 @@ def xgcd(b, a):
     #x0, last_x, y, last_y = 1, 0, 0, 1
 
     x = 1 
-    last_x = 0
     y = 0
+    last_x = 0
     last_y = 1
 
     while a != 0:
