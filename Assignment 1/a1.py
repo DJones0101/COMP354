@@ -6,28 +6,29 @@
 
 
 
-def gcd(a, b):
+def xgcd(b, a):
 
-	#check preconditons
-	if a < 0 and b < 0 and a != int(a) and b != int(b):
-		print("Invalid input")
-		return
+    #x0, last_x, y, last_y = 1, 0, 0, 1
 
-	m = a
-	n = b
-	r = m % n
-	 	
-	while r > 0:
-		m = n
-		n = r
-		r = m % n
-		
-	return n
+    x = 1 
+    last_x = 0
+    y = 0
+    last_y = 1
+
+    while a != 0:
+
+        q, b, a = b // a, a, b % a
+        x, last_x = last_x, x - q * last_x
+        y, last_y = last_y, y - q * last_y
+
+        #print("a = " + str(a) +" b = " + str(b) + " x = " + str(x) + " last_x = " + str(last_x) + " y = " + str(y) + " last_y = " + str(last_y))
+
+    return  b, x, y
 
 a = 56
 b = 15
 
-print("a = " + str(a) +" b = " + str(b) + " gcd = " + str(gcd(a,b)))
+print("a = " + str(a) +" b = " + str(b) + " gcd = " + str(xgcd(a,b)))
 
 
 
