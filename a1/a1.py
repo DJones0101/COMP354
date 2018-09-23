@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 
 # Darius Jones
 # 9/19/2018
@@ -14,8 +15,6 @@ import math, sys, random
 def xgcd(b, a):
 
 
-    # keep a running total on the number of steps
-    steps = 4
     x = 1  # runs 1 time for each assignment, so 4 times in total
     y = 0
     last_x = 0
@@ -23,15 +22,11 @@ def xgcd(b, a):
     
     while a > 0:   #runs n times, everything in the loop also runs n times so, 8n in total
 
-
         q, b, a = (b//a), a, (b % a)
         x, last_x = last_x, x - q * last_x
         y, last_y = last_y, y - q * last_y   
         #print("a = " + str(a) +" b = " + str(b) + " x = " + str(x) + " last_x = " + str(last_x) + " y = " + str(y) + " last_y = " + str(last_y))
-        steps += 8
-
-    print("Counted Steps = " + str(steps))
-
+    
     return  b, x, y
 
 
@@ -49,36 +44,20 @@ def test_algo(a,b):
     pass
 
 
-def min(a,b):
-
-    if a < b:
-        return a
-    else:
-        return b
-    pass
-
-def min(a,b):
-
-    if a > b:
-        return a
-    else:
-        return b
-    pass
 
 def runtime(a,b):
 
     # run time polynomial 8(n) + 4
     # where n = 2^log2(x), where x is the len of the min(a,b) binary string 
 
-    n = min(a,b)  #Problems here n is turning into a float for some strange reason.
-    m = max(a,b)  
+    m = a
     x = "{0:b}".format(m)
     n = 2 ** math.log(len(x),2)
     runtime = (8 * n) + 4
-    xgcd(n,m)
-    print("Min of " + " ("+str(m)+","+str(n) +") "+ str(m))
+    
+    print("Min of " + " ("+str(a)+","+str(b) +") "+ str(m))
     print("Binary lenght of " + str(m)+" = " + str(len(x)))
-    print("Calculated runtime = " + str(math.ceil(runtime)))
+    print("Runtime = " + str(math.ceil(runtime)))
     pass
 
 
@@ -88,6 +67,7 @@ def main():
 
         a = random.randint(0, 1000)
         b = random.randint(0, 1000)
+
         #test_algo(a,b)
         runtime(a,b)
         print("\n")
