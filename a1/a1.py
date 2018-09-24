@@ -16,13 +16,9 @@ import math, sys, random
 def xgcd(b, a):
 
 
-<<<<<<< HEAD
     if (b<=0 or a<=0) or (b!=int(b) or a!=int(a)):
         raise ValueError("Invalid inputs   " + str(a) +" "+ str(b))
 
-
-=======
->>>>>>> master
     x = 1  # runs 1 time for each assignment, so 4 times in total
     y = 0
     last_x = 0
@@ -35,11 +31,10 @@ def xgcd(b, a):
         x, last_x = last_x, x - q * last_x
         y, last_y = last_y, y - q * last_y   
         #print("a = " + str(a) +" b = " + str(b) + " x = " + str(x) + " last_x = " + str(last_x) + " y = " + str(y) + " last_y = " + str(last_y))
-<<<<<<< HEAD
+
         
-=======
-    
->>>>>>> master
+
+
     return  b, x, y
 
 
@@ -58,11 +53,8 @@ def test_algo(b,a):
 
 
 
-<<<<<<< HEAD
 def runtime(b,a):
-=======
-def runtime(a,b):
->>>>>>> master
+
 
     # run time polynomial 8(n) + 4
     # where n = 2^log2(x), where x is the len of the min(a,b) binary string
@@ -71,17 +63,11 @@ def runtime(a,b):
     x = "{0:b}".format(m)
     n = 2 ** math.log(len(x),2)
     runtime = (8 * n) + 4
-<<<<<<< HEAD
     print("Binary lenght of " + str(m)+" = " + str(len(x)))
     print("Runtime = " + str(math.ceil(runtime)))
     test_algo(b,a)
     print("\n")
-=======
-    
-    print("Min of " + " ("+str(a)+","+str(b) +") "+ str(m))
-    print("Binary lenght of " + str(m)+" = " + str(len(x)))
-    print("Runtime = " + str(math.ceil(runtime)))
->>>>>>> master
+
     pass
 
 
@@ -92,13 +78,6 @@ def main():
         a = random.randint(1, 1000)
         b = random.randint(1, 1000)
 
-<<<<<<< HEAD
-=======
-        a = random.randint(0, 1000)
-        b = random.randint(0, 1000)
-
->>>>>>> master
-        #test_algo(a,b)
         runtime(b,a)        
 
     pass
