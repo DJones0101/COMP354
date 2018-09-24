@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 # Darius Jones
 # 9/20/2018
@@ -12,6 +12,8 @@
 # integer with a binary string of lenght 10 the runtime is 85 and  for 9 the runtime is 77 and so on.
 
 import math, sys, random
+from matplotlib import pyplot as plt
+
 
 def xgcd(b, a):
 
@@ -68,19 +70,35 @@ def runtime(b,a):
     test_algo(b,a)
     print("\n")
 
+
+    return runtime, len(x)
     pass
 
 
 def main():
 
+    x = []
+    y = []
+
     for i in range(0,1000):
 
-        a = random.randint(1, 1000)
-        b = random.randint(1, 1000)
+ 
 
-        runtime(b,a)        
+        a = random.randint(1, 10000)
+        b = random.randint(1, 10000)
+
+        r, l = runtime(b,a)
+        x.append(r)
+        y.append(l) 
+     
 
     pass
+
+    plt.plot(x,y)
+    plt.title("Relationship between binary lenght and number of steps")
+    plt.ylabel("Lenght binary string")
+    plt.xlabel("Steps")
+    plt.show()
 
 
 if __name__ == "__main__":
