@@ -5,10 +5,9 @@
 # COMP 354
 # Python 3.6.4
 
-
-# The runtime of euclid's extended algorithm depends binary encoding of a, since the while loop conditions depends on a. The 
-# runtime polynomial is 8n + 4, where n = 2^log2(a binary length). To run the experiment we run the runtime method 
-# on a group of numbers and draw a conculsion that the runtime is dependant on a's binary string lenght. For example every 
+# The runtime of euclid's extended algorithm depends binary encoding of a, since the while loop conditions depends on a. The
+# runtime polynomial is 8n + 4, where n = 2^log2(a binary length). To run the experiment we run the runtime method
+# on a group of numbers and draw a conculsion that the runtime is dependant on a's binary string lenght. For example every
 # integer with a binary string of lenght 10 the runtime is 85 and  for 9 the runtime is 77 and so on.
 
 import math, sys, random
@@ -17,95 +16,119 @@ from matplotlib import pyplot as plt
 
 def xgcd(b, a):
 
+	if (b <= 0 or a <= 0) or (b != int(b) or a != int(a)):
+		raise ValueError("Invalid inputs   " + str(a) + " " + str(b))
 
-    if (b<=0 or a<=0) or (b!=int(b) or a!=int(a)):
-        raise ValueError("Invalid inputs   " + str(a) +" "+ str(b))
+	x = 1  # runs 1 time for each assignment, so 4 times in total
+	y = 0
+	last_x = 0
+	last_y = 1
 
-    x = 1  # runs 1 time for each assignment, so 4 times in total
-    y = 0
-    last_x = 0
-    last_y = 1
-    
-    
-    while a > 0:   #runs n times, everything in the loop also runs n times so, 8n in total
+	steps = 4
 
-        q, b, a = (b//a), a, (b % a)
-        x, last_x = last_x, x - q * last_x
-        y, last_y = last_y, y - q * last_y   
-        #print("a = " + str(a) +" b = " + str(b) + " x = " + str(x) + " last_x = " + str(last_x) + " y = " + str(y) + " last_y = " + str(last_y))
+	while a > 0:  #runs n times, everything in the loop also runs n times so, 8n in total
 
-        
+		q, b, a = (b // a), a, (b % a)
+		x, last_x = last_x, x - q * last_x
+		y, last_y = last_y, y - q * last_y
+		#print("a = " + str(a) +" b = " + str(b) + " x = " + str(x) + " last_x = " + str(last_x) + " y = " + str(y) + " last_y = " + str(last_y))
+		steps += 8
 
-
-    return  b, x, y
+	return b, x, y, steps
 
 
-def test_algo(b,a):
+def test_algo(b, a):
 
-    # a(s) + b(t) = gcd(a,b)
+	# a(s) + b(t) = gcd(a,b)
 
-    gcd, s, t = xgcd (a,b)
+	gcd, s, t = xgcd(a, b)
 
-    if( (a * s) + (b * t) == gcd ):
+	if ((a * s) + (b * t) == gcd):
 
-        print("Testing " + str(a) +"*"+ str(s) + " + "+ str(b) +"*"+ str(t) +"= "+ str(gcd) + " PASS!!")
-    else :
-        print("Testing " + str(a) +"*"+ str(s) + " + "+ str(b) +"*"+ str(t) +"= "+ str(gcd) + " FAIL!!")
-    pass
+		return True
+	else:
+		return False
+		
+	
 
+def calculate( bits, bitslist):
 
+	if not bitslist:
+		print("list is empty")
+		return
 
-def runtime(b,a):
+	total = 0
 
+	print("-------------- %d bits ----------------------" %(bits))
 
-    # run time polynomial 8(n) + 4
-    # where n = 2^log2(x), where x is the len of the min(a,b) binary string
+	print(bitslist)
 
-    m = a
-    x = "{0:b}".format(m)
-    n = 2 ** math.log(len(x),2)
-    runtime = (8 * n) + 4
-    print("Binary lenght of " + str(m)+" = " + str(len(x)))
-    print("Runtime = " + str(math.ceil(runtime)))
-    test_algo(b,a)
-    print("\n")
+	steps = 0
+	blist = bitslist[::-1]
 
+	for i in range(len(bitslist)):
 
-    return runtime, len(x)
-    pass
+		b =  blist[i]#random.randint(1, 100)
+		a = bitslist[i]
+		gcd, s, t, steps = xgcd(b, a)
 
+		total += steps
+		print("b = %d, a = %d " % (b, a))
+		print("steps =  %d\n" % (steps))
+
+	average = total / len(bitslist)
+
+	print("Average steps = %d" %(average))
+	return average
 
 def main():
 
-    x = []
-    y = []
+	twobits = []
+	threebits = []
+	fourbits = []
+	fivebits = []
+	sixbits = []
+	sevenbits = []
+	eightbits = []
 
-    for i in range(0,1000):
 
- 
+	for i in range(0, 200000):
+		x = "{0:b}".format(i)
+		if len(x) == 2:
+			twobits.append(i)
+		elif len(x) == 3:
+			threebits.append(i)
+		elif len(x) == 4:
+			fourbits.append(i)
+		elif len(x) == 5:
+			fivebits.append(i)
+		elif len(x) == 6:
+			sixbits.append(i)
+		elif len(x) == 7:
+			sevenbits.append(i)
+		elif len(x) == 8:
+			eightbits.append(i)
 
-        a = random.randint(1, 10000)
-        b = random.randint(1, 10000)
+	x = [2,3,4,5,6,7,8]
 
-        r, l = runtime(b,a)
-        x.append(r)
-        y.append(l) 
-     
 
-    pass
 
-    plt.plot(x,y)
-    plt.title("Relationship between binary lenght and number of steps")
-    plt.ylabel("Lenght binary string")
-    plt.xlabel("Steps")
-    plt.show()
+	y = [calculate(2, twobits),
+		calculate(3, threebits),
+		calculate(4, fourbits),
+		calculate(5, fivebits),
+		calculate(6, sixbits),
+		calculate(7, sevenbits),
+		calculate(8, eightbits)]
 
+	plt.plot(x,y)
+	plt.title("Relationship between number of bits and number of steps")
+	plt.ylabel("Number of steps ")
+	plt.xlabel("Number of bits")
+	plt.show()
+
+
+#print ("total = " + str(twobits_total))
 
 if __name__ == "__main__":
-    main()
-
-
-
-
-
-
+	main()
