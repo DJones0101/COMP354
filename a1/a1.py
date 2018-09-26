@@ -5,10 +5,6 @@
 # COMP 354
 # Python 3.6.4
 
-# The runtime of euclid's extended algorithm depends binary encoding of a, since the while loop conditions depends on a. The
-# runtime polynomial is 8n + 4, where n = 2^log2(a binary length). To run the experiment we run the runtime method
-# on a group of numbers and draw a conculsion that the runtime is dependant on a's binary string lenght. For example every
-# integer with a binary string of lenght 10 the runtime is 85 and  for 9 the runtime is 77 and so on.
 
 import math, sys, random
 from matplotlib import pyplot as plt
@@ -51,7 +47,7 @@ def test_algo(b, a):
 		
 	
 
-def calculate( bits, bitslist):
+def calculate(bits, bitslist):
 
 	if not bitslist:
 		print("list is empty")
@@ -64,11 +60,11 @@ def calculate( bits, bitslist):
 	print(bitslist)
 
 	steps = 0
-	blist = bitslist[::-1]
+	b =  0x7FFFFFFF
 
 	for i in range(len(bitslist)):
 
-		b =  blist[i]#random.randint(1, 100)
+		#b =  blist[i]#random.randint(1, 100)
 		a = bitslist[i]
 		gcd, s, t, steps = xgcd(b, a)
 
@@ -90,9 +86,12 @@ def main():
 	sixbits = []
 	sevenbits = []
 	eightbits = []
+	ninebits = []
+	tenbits = []
 
 
-	for i in range(0, 200000):
+
+	for i in range(0, 0xFFF):
 		x = "{0:b}".format(i)
 		if len(x) == 2:
 			twobits.append(i)
@@ -108,8 +107,13 @@ def main():
 			sevenbits.append(i)
 		elif len(x) == 8:
 			eightbits.append(i)
+		elif len(x) == 9:
+			ninebits.append(i)
+		elif len(x) == 10:
+			tenbits.append(i)
 
-	x = [2,3,4,5,6,7,8]
+
+	x = [2,3,4,5,6,7,8,9,10]
 
 
 
@@ -119,9 +123,12 @@ def main():
 		calculate(5, fivebits),
 		calculate(6, sixbits),
 		calculate(7, sevenbits),
-		calculate(8, eightbits)]
+		calculate(8, eightbits),
+		calculate(9, ninebits),
+		calculate(10, tenbits)
+		]
 
-	plt.plot(x,y)
+	plt.scatter(x,y)
 	plt.title("Relationship between number of bits and number of steps")
 	plt.ylabel("Number of steps ")
 	plt.xlabel("Number of bits")
