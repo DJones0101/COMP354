@@ -49,6 +49,9 @@ def test_algo(b, a):
 
 def calculate(bits, bitslist):
 
+
+	# We should modify this method to return list of averages for the length of bits.
+	# This will be used to used to populate the y-axis of the graph
 	if not bitslist:
 		print("list is empty")
 		return
@@ -60,13 +63,13 @@ def calculate(bits, bitslist):
 	print(bitslist)
 
 	steps = 0
-	b =  0x7FFFFFFF
+	b =  0x7FFFFFFF # 31 bits, we will keep this value constant. becaue the value of (a) is doing the work in the algorithm.
 
 	for i in range(len(bitslist)):
 
 		#b =  blist[i]#random.randint(1, 100)
 		a = bitslist[i]
-		gcd, s, t, steps = xgcd(b, a)
+		gcd, s, t, steps = xgcd(b, a) # the calculation of the steps will be used to  populate the x-axis of the graph.
 
 		total += steps
 		print("b = %d, a = %d " % (b, a))
@@ -79,6 +82,7 @@ def calculate(bits, bitslist):
 
 def main():
 
+	# we will get rid of this 
 	twobits = []
 	threebits = []
 	fourbits = []
@@ -91,6 +95,13 @@ def main():
 
 
 
+	# turn into an array or arrays . we need to go up to N bits meaning 100 or 200 bits.
+	# becasue the ways you can represent a value n is 2^n, we need to  make a cut off of numbers 
+	# that wil be in the list. say at bits of len 15 we limit the array to len  2^14.
+
+
+	# this will be changed to a method that generates the numbers with len n from (1 to say 100)
+	# and returns a list of those numbers
 	for i in range(0, 0xFFF):
 		x = "{0:b}".format(i)
 		if len(x) == 2:
@@ -111,6 +122,10 @@ def main():
 			ninebits.append(i)
 		elif len(x) == 10:
 			tenbits.append(i)
+		elif len(x) == 11
+			elevenbits.append(i)
+		elif len(x) == 12
+			twelvebits.append(i)
 
 
 	x = [2,3,4,5,6,7,8,9,10]
@@ -134,8 +149,6 @@ def main():
 	plt.xlabel("Number of bits")
 	plt.show()
 
-
-#print ("total = " + str(twobits_total))
 
 if __name__ == "__main__":
 	main()
