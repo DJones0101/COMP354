@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 
 # Darius Jones
+# Chad Bloor
+# Gerardo Carillo
 # 9/20/2018
 # COMP 354
 # Python 3.6.4
 
 
-import math, sys, random
+import math, random
 from matplotlib import pyplot as plt
-
 
 def xgcd(b, a):
 
@@ -30,123 +31,61 @@ def xgcd(b, a):
 		#print("a = " + str(a) +" b = " + str(b) + " x = " + str(x) + " last_x = " + str(last_x) + " y = " + str(y) + " last_y = " + str(last_y))
 		steps += 8
 
-	return b, x, y, steps
-
-
-def test_algo(b, a):
-
-	# a(s) + b(t) = gcd(a,b)
-
-	gcd, s, t = xgcd(a, b)
-
-	if ((a * s) + (b * t) == gcd):
-
-		return True
-	else:
-		return False
-		
+	return steps
 	
 
-def calculate(bits, bitslist):
+def calculateAverage(length):
 
+	print("-------------- %d length ----------------------" %(length))
 
-	# We should modify this method to return list of averages for the length of bits.
-	# This will be used to used to populate the y-axis of the graph
-	if not bitslist:
-		print("list is empty")
-		return
-
-	total = 0
-
-	print("-------------- %d bits ----------------------" %(bits))
-
-	print(bitslist)
-
+	b =  generate_string(200)
+	a = generate_string(length)
+	total = 0 
 	steps = 0
-	b =  0x7FFFFFFF # 31 bits, we will keep this value constant. becaue the value of (a) is doing the work in the algorithm.
+	runs = 0
 
-	for i in range(len(bitslist)):
+	for i in range(0, 10):
 
-		#b =  blist[i]#random.randint(1, 100)
-		a = bitslist[i]
-		gcd, s, t, steps = xgcd(b, a) # the calculation of the steps will be used to  populate the x-axis of the graph.
+		steps = xgcd(int(b,2), int(a,2)) # the calculation of the steps will be used to  populate the x-axis of the graph.
 
 		total += steps
-		print("b = %d, a = %d " % (b, a))
+		print("a = %d, b = %d" %(int(a,2), int(b,2)))
 		print("steps =  %d\n" % (steps))
+		a = replace_random(a)
+		runs += 1
 
-	average = total / len(bitslist)
+	average = total / runs
 
 	print("Average steps = %d" %(average))
 	return average
 
+
+def replace_random(seq):
+	seq = list(seq)
+	toReplace = random.randint(1,len(seq)-1)
+	seq[toReplace] = "0"
+	return "".join(seq)
+
+def generate_string(length):
+	listn = ""
+	for i in range(0, length):
+		listn += "1"
+	return listn
+
 def main():
 
-	# we will get rid of this 
-	twobits = []
-	threebits = []
-	fourbits = []
-	fivebits = []
-	sixbits = []
-	sevenbits = []
-	eightbits = []
-	ninebits = []
-	tenbits = []
+	x = []
+	y = []
+	for i in range(2, 100):
+		r = calculateAverage(i)
+		x.append(i)
+		y.append(r)
 
-
-
-	# turn into an array or arrays . we need to go up to N bits meaning 100 or 200 bits.
-	# becasue the ways you can represent a value n is 2^n, we need to  make a cut off of numbers 
-	# that wil be in the list. say at bits of len 15 we limit the array to len  2^14.
-
-
-	# this will be changed to a method that generates the numbers with len n from (1 to say 100)
-	# and returns a list of those numbers
-	for i in range(0, 0xFFF):
-		x = "{0:b}".format(i)
-		if len(x) == 2:
-			twobits.append(i)
-		elif len(x) == 3:
-			threebits.append(i)
-		elif len(x) == 4:
-			fourbits.append(i)
-		elif len(x) == 5:
-			fivebits.append(i)
-		elif len(x) == 6:
-			sixbits.append(i)
-		elif len(x) == 7:
-			sevenbits.append(i)
-		elif len(x) == 8:
-			eightbits.append(i)
-		elif len(x) == 9:
-			ninebits.append(i)
-		elif len(x) == 10:
-			tenbits.append(i)
-		elif len(x) == 11
-			elevenbits.append(i)
-		elif len(x) == 12
-			twelvebits.append(i)
-
-
-	x = [2,3,4,5,6,7,8,9,10]
-
-
-
-	y = [calculate(2, twobits),
-		calculate(3, threebits),
-		calculate(4, fourbits),
-		calculate(5, fivebits),
-		calculate(6, sixbits),
-		calculate(7, sevenbits),
-		calculate(8, eightbits),
-		calculate(9, ninebits),
-		calculate(10, tenbits)
-		]
 
 	plt.scatter(x,y)
 	plt.title("Relationship between number of bits and number of steps")
-	plt.ylabel("Number of steps ")
-	plt.xlabel("Number of bits")
+	plt.ylabel("Number of steps")
+	plt.xlabel("Binary length")
 	plt.show()
 
 
