@@ -45,45 +45,55 @@ def test_algo(b, a):
 	else:
 		return False
 		
+	
 
-def getBitsList(lenght):
-
-	list1 = []
-
-	for i in range(1, (2 ** 10)):
-		x = "{0:b}".format(i)
-		if (len(x) == lenght) and (x != 0):
-			list1.append(i)
-	return list1
-
-def calculateAverage(bitslist):
+def calculate(bits, bitslist):
 
 
 	# We should modify this method to return list of averages for the length of bits.
 	# This will be used to used to populate the y-axis of the graph
+	if not bitslist:
+		print("list is empty")
+		return
+
+	total = 0
+
+	print("-------------- %d bits ----------------------" %(bits))
+
+	print(bitslist)
 
 	steps = 0
 	b =  0x7FFFFFFF # 31 bits, we will keep this value constant. becaue the value of (a) is doing the work in the algorithm.
-	total = 0
-	print(bitslist)
+
 	for i in range(len(bitslist)):
 
 		#b =  blist[i]#random.randint(1, 100)
 		a = bitslist[i]
-		print("A = %d" %(a))
 		gcd, s, t, steps = xgcd(b, a) # the calculation of the steps will be used to  populate the x-axis of the graph.
 
 		total += steps
-
+		print("b = %d, a = %d " % (b, a))
+		print("steps =  %d\n" % (steps))
 
 	average = total / len(bitslist)
 
+	print("Average steps = %d" %(average))
 	return average
-
 
 def main():
 
 	# we will get rid of this 
+	twobits = []
+	threebits = []
+	fourbits = []
+	fivebits = []
+	sixbits = []
+	sevenbits = []
+	eightbits = []
+	ninebits = []
+	tenbits = []
+
+
 
 	# turn into an array or arrays . we need to go up to N bits meaning 100 or 200 bits.
 	# becasue the ways you can represent a value n is 2^n, we need to  make a cut off of numbers 
@@ -92,27 +102,46 @@ def main():
 
 	# this will be changed to a method that generates the numbers with len n from (1 to say 100)
 	# and returns a list of those numbers
+	for i in range(0, 0xFFF):
+		x = "{0:b}".format(i)
+		if len(x) == 2:
+			twobits.append(i)
+		elif len(x) == 3:
+			threebits.append(i)
+		elif len(x) == 4:
+			fourbits.append(i)
+		elif len(x) == 5:
+			fivebits.append(i)
+		elif len(x) == 6:
+			sixbits.append(i)
+		elif len(x) == 7:
+			sevenbits.append(i)
+		elif len(x) == 8:
+			eightbits.append(i)
+		elif len(x) == 9:
+			ninebits.append(i)
+		elif len(x) == 10:
+			tenbits.append(i)
+		elif len(x) == 11
+			elevenbits.append(i)
+		elif len(x) == 12
+			twelvebits.append(i)
 
-	x = []
-	y = []
-	bitList = []
 
-	for i in range(1,100):
-		x.append(i)
-	
-	index = 0
-	index1 = 0
-	count = 1
-
-	for i in range(1, 100):
-		bitList.append(getBitsList(count))
-		count += 1
+	x = [2,3,4,5,6,7,8,9,10]
 
 
-	for i in range(1, 100):
-		 y.append(calculateAverage(bitList[index1]))
-		 index1 += 1
-	
+
+	y = [calculate(2, twobits),
+		calculate(3, threebits),
+		calculate(4, fourbits),
+		calculate(5, fivebits),
+		calculate(6, sixbits),
+		calculate(7, sevenbits),
+		calculate(8, eightbits),
+		calculate(9, ninebits),
+		calculate(10, tenbits)
+		]
 
 	plt.scatter(x,y)
 	plt.title("Relationship between number of bits and number of steps")
