@@ -14,3 +14,8 @@ The relationship between number of steps and binary lenght is shown by the graph
 
 ---
 
+## Assignment 2
+
+---
+## Assignment 3
+
