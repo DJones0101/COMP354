@@ -1,4 +1,4 @@
-# COMP354
+# COMP354  Analysis of Algorithms
 
 ## Assignment 1
 
