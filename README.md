@@ -36,7 +36,7 @@ below:
 ![alt text](https://github.com/DJones0101/COMP354/blob/master/a2/heap.png)
 
 note that the array has the following interesting structure: the parent of i is bi/2c and
-the left child of i is 2i and the right child of i is 2i + 1.
+the left child of i is 2i and the right child of i is (2i + 1).
 With the binary heap data structure we can implement line 4. efficiently, that is, find
 the cheapest e. To this end, implement a min-priority queue B, which, during the
 execution of Prim’s algorithm, keeps track of all the vertices that are not in the tree
