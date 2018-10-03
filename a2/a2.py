@@ -33,25 +33,29 @@ def prims(graph, start):
 					hq.heappush(edges, (weight, to, to_next))
 	return T
 
-
-
-
-
-
 #def kruskals():
 
-def main():
 
-	T = prims(graph, "d")
+def show_graph(graph):
+
 	G = nx.Graph(graph)
-	print(T)
-	pos = nx.spectral_layout(G)
-	labels = nx.get_edge_attributes(G,'weight')
+	pos = nx.circular_layout(G)
+	labels = nx.get_node_attributes(G,"pos")
 	nx.draw_networkx_edge_labels(G,pos,edge_labels=labels)
-	
 	nx.draw(G, with_labels=True)
 	plt.draw()
 	plt.show()
+
+
+# The goal is to color the edges after the algorithm was ran
+# https://stackoverflow.com/questions/25639169/networkx-change-color-width-according-to-edge-attributes-inconsistent-result
+
+
+def main():
+
+	mst = prims(graph, "a")
+	show_graph(graph)
+	show_graph(mst)
 
 
 
