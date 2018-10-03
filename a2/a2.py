@@ -5,64 +5,58 @@
 # COMP 354
 # Python 3.6
 
-import heapq as hq
-import itertools 
-import networkx as nx
-import matplotlib.pyplot as plt
-from dataclasses import dataclass, field
-from typing import Any
-q = []
-entry_finder = {}
-REMOVED = "<REMOVED_TASK>"
-counter = itertools.count()
+import heapq as hq, networkx as nx, matplotlib.pyplot as plt
+from collections import defaultdict
 
 
-def add_task(task, priority=0):
-	if task in entry_finder:
-		remove_task(task)
-		count = next(counter)
-		entry = [priority, count, task]
-		entry_finder[task] = entry
-		hq.heappush(q, entry)
+graph = {
+	"a":{"b":7, "d":5},
+	"b":{"a":7, "d":9, "c":8, },
+	"c":{"d":5, },
+	"d":{"a":5, "b":9,},
+}
 
-def remove_task(task):
-	entry = entry_finder.pop(task)
-	entry[-1] = REMOVED
+def prims(graph, start):
+	 
+	T = defaultdict(set)
+	visited = set([start])
+	edges = [(weight, start, to) for to, weight, in graph[start].items()]
+	hq.heapify(edges)
 
-def pop_task():
-	while q:
-		priority, count, task = hq.heappop(q)
-		if task is not REMOVED:
-			del entry_finder[task]
-			return task
-	raise KeyError("Pop from empty priority queue.") 
+	while edges:
+		weight, frm, to = hq.heappop(edges)
+		if to not in visited:
+			visited.add(to)
+			T[frm].add(to)
+			for to_next, cost in graph[to].items():
+				if to_next not in visited:
+					hq.heappush(edges, (weight, to, to_next))
+	return T
 
-def prims():
-def kruskals():
+#def kruskals():
+
+
+def show_graph(graph):
+
+	G = nx.Graph(graph)
+	pos = nx.circular_layout(G)
+	labels = nx.get_node_attributes(G,"pos")
+	nx.draw_networkx_edge_labels(G,pos,edge_labels=labels)
+	nx.draw(G, with_labels=True)
+	plt.draw()
+	plt.show()
+
+
+# The goal is to color the edges after the algorithm was ran
+# https://stackoverflow.com/questions/25639169/networkx-change-color-width-according-to-edge-attributes-inconsistent-result
+
 
 def main():
 
-	G = nx.Graph()
-	G.add_node("A")
-	G.add_node("B")
-	G.add_node("C")
-	G.add_node("D")
-	G.add_node("E")
+	mst = prims(graph, "a")
+	show_graph(graph)
+	show_graph(mst)
 
-	G.add_edge("A","B", weight= 1.0)
-	G.add_edge("B","C", weight= 5.0)
-	G.add_edge("C","A", weight= 7.0)
-	G.add_edge("A","D", weight= 3.0)
-	G.add_edge("D","E", weight= 6.0)
-	G.add_edge("E","C", weight= 4.0)
-	G.add_edge("C","D", weight= 2.0)
-	pos = nx.spectral_layout(G)
-	labels = nx.get_edge_attributes(G,'weight')
-	nx.draw_networkx_edge_labels(G,pos,edge_labels=labels)
-	
-	nx.draw_spectral(G, with_labels=True)
-	plt.draw()
-	plt.show()
 
 
 
