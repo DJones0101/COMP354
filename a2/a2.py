@@ -10,9 +10,9 @@ from collections import defaultdict
 
 
 graph = {
-	"a":[("b",1), ("c",6)],
-	"b":[("c",7), ("d",4), ("a",1)],
-	"c":[("a",6), ("b",7), ("e",3), ("d",2)],
+	"a":[("b",1), ("c",2)],
+	"b":[("c",1), ("d",4), ("a",1)],
+	"c":[("a",2), ("b",1), ("e",3), ("d",2)],
 	"d":[("b",4), ("c",2), ("e",5)],
 	"e":[("d",5), ("c",3)]
 }
@@ -38,43 +38,64 @@ def prims(graph):
 #def kruskals():
 
 
-def show_graph(graph, colorPath=False):
+def showGraph(graph):
 
 	G = nx.Graph()
 	for frm, values in graph.items():
 		for to, weight in values:
-			G.add_edge(frm, to, weight=weight)
+			G.add_edge(frm, to, color='black', weight=weight)
 
-	# if colorPath:
-	# 	for e in G.edges():
-	# 		G[e[0]][e[1]]['color'] = 'black'
-		
-	# 	for i in xrange(len(p)-1):
-	# 		G[p[i]][p[i+1]]['color'] = 'blue'
-
-
-
+	edges = G.edges()
+	colors = [G[frm][to]['color'] for frm,to in edges]
 	
 	pos = nx.circular_layout(G)
 	pylab.figure(1)
 	nx.draw(G,pos,with_labels=True)
-	edge_labels = dict([((u,v,),d['weight'])
-    for u,v,d in G.edges(data=True)])
+	nx.draw(G, pos, edges=edges, edge_color=colors, width=3)
+	edge_labels = dict([((frm,to,),d['weight'])
+    for frm,to,d in G.edges(data=True)])
 	nx.draw_networkx_edge_labels(G,pos,edge_labels=edge_labels)	
 	plt.draw()
 	plt.show()
 
-def show_path(graph, mst):
-	G = nx.Graph(graph)
-	    
-	pos = nx.spring_layout(G)  #setting the positions with respect to G, not k.
-	k = G.subgraph(mst)  
-	pos = nx.spring_layout(G)
-	labels = nx.get_node_attributes(G,"pos")
-	nx.draw_networkx_edge_labels(k,pos,edge_labels=labels)
-	nx.draw(k, with_labels=True)
+def showPath(graph, mst):
+
+
+	path = []
+	for frm, values in mst.items():
+		for to in values:
+			path.append((frm,to))
+	print("path", path)
+
+	G = nx.Graph()
+	for frm, values in graph.items():
+		for to, weight in values:
+			if (frm, to) in path:
+				print("green", (frm, to))		
+				G.add_edge(frm, to, color='green', weight=weight)
+			else:
+				print("black", (frm, to))	
+				G.add_edge(frm, to, color='black', weight=weight)	
+				
+
+
+	edges = G.edges()
+	print("num of edges", len(edges))
+	colors = [G[frm][to]['color'] for frm,to in edges]	
+	print(colors)
+
+	pos = nx.circular_layout(G)
+	pylab.figure(1)
+	nx.draw(G,pos,with_labels=True)
+	edge_labels = dict([((frm,to,),d['weight'])
+    for frm,to,d in G.edges(data=True)])
+	nx.draw_networkx_edge_labels(G,pos,edge_labels=edge_labels)	
+	nx.draw(G, pos, edges=edges, edge_color=colors, width=3)
 	plt.draw()
 	plt.show()
+
+
+
 	
 
 #https://stackoverflow.com/questions/29838746/how-to-draw-subgraph-using-networkx  show subgrap
@@ -84,9 +105,14 @@ def show_path(graph, mst):
 
 
 def main():
-	show_graph(graph)
+	
 	mst = prims(graph)
-	print(mst)
+	# showPath(graph, mst)
+	showPath(graph,mst)	
+
+
+	
+	
 		
 
 
