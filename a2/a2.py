@@ -58,36 +58,35 @@ def showGraph(graph):
 	plt.draw()
 	plt.show()
 
-def showPath(graph, mst):
 
+def showPath(graph, mcst):
+	# Colors the path of the mcst green
 
 	path = []
-	for frm, values in mst.items():
+	weightList = [] 
+	for frm, values in mcst.items():
 		for to in values:
 			path.append((frm,to))
-	print("path", path)
+
+	mcstWeight = 0
 
 	G = nx.Graph()
 	for frm, values in graph.items():
 		for to, weight in values:
-			if (frm, to) in path:
-				print("green", (frm, to))		
-				G.add_edge(frm, to, color='green', weight=weight)
-				G[frm][to]['color'] = 'green'
-			else:
-				print("black", (frm, to))	
-				G.add_edge(frm, to, color='black', weight=weight)
-				G[frm][to]['color'] = 'black'	
-				
+			if (frm, to) in path:		
+				weightList.append(weight)
+				mcstWeight += weight
+				pass
+			G.add_edge(frm, to, color='black', weight=weight)
 
+	index = 0
+	for frm, to in path:
+		G.add_edge(frm, to, color='green', weight=weightList[index])
+		index += 1
 
 	edges = G.edges()
-	print("num of edges", len(edges))
 	colors = [G[frm][to]['color'] for frm,to in edges]	
-	print(colors)
-
 	pos = nx.circular_layout(G)
-	pylab.figure(1)
 	nx.draw(G,pos,with_labels=True)
 	edge_labels = dict([((frm,to,),d['weight'])
     for frm,to,d in G.edges(data=True)])
@@ -96,26 +95,16 @@ def showPath(graph, mst):
 	plt.draw()
 	plt.show()
 
+	print("Weight of the MCST is %d" %(mcstWeight))
 
-
-	
-
-#https://stackoverflow.com/questions/29838746/how-to-draw-subgraph-using-networkx  show subgrap
-
-# The goal is to color the edges after the algorithm was ran
-# hhttps://stackoverflow.com/questions/34120957/python-networkx-mark-edges-by-coloring-for-graph-drawing
 
 
 def main():
-	
-	mst = prims(graph)
-	# showPath(graph, mst)
-	showPath(graph,mst)	
 
-
+	showGraph(graph)
+	mcst = prims(graph)
+	showPath(graph,mcst)
 	
-	
-		
 
 
 
