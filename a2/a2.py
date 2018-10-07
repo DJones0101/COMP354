@@ -73,9 +73,11 @@ def showPath(graph, mst):
 			if (frm, to) in path:
 				print("green", (frm, to))		
 				G.add_edge(frm, to, color='green', weight=weight)
+				G[frm][to]['color'] = 'green'
 			else:
 				print("black", (frm, to))	
-				G.add_edge(frm, to, color='black', weight=weight)	
+				G.add_edge(frm, to, color='black', weight=weight)
+				G[frm][to]['color'] = 'black'	
 				
 
 

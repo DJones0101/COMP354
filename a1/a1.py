@@ -46,8 +46,7 @@ def calculateAverage(length):
 
 	for i in range(0, 10):
 
-		steps = xgcd(int(b,2), int(a,2)) # the calculation of the steps will be used to  populate the x-axis of the graph.
-
+		steps = xgcd(int(b,2), int(a,2)) 
 		total += steps
 		print("a = %d, b = %d" %(int(a,2), int(b,2)))
 		print("steps =  %d\n" % (steps))
@@ -76,7 +75,7 @@ def main():
 
 	x = []
 	y = []
-	for i in range(2, 100):
+	for i in range(2, 101):
 		r = calculateAverage(i)
 		x.append(i)
 		y.append(r)
