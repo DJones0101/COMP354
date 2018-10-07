@@ -8,7 +8,7 @@ There is a typo: instead of  ```min{m,n}```, it should be ```min{(m)_b,(n)_b}```
 
 The relationship between number of steps and binary lenght is shown by the graph below:
 
-![alt text](https://github.com/DJones0101/COMP354/blob/master/a1/graph.png)
+![Graph](https://github.com/DJones0101/COMP354/blob/master/a1/graph.png)
 
 
 
@@ -22,7 +22,7 @@ Prim’s algorithm for MCSTs grows a tree in a natural way, starting from an arb
 at each stage it adds a new branch to the already constructed tree. The algorithm stops when
 all nodes have been reached:
 
-![alt text](https://github.com/DJones0101/COMP354/blob/master/a2/Prims.png)
+![Prim's](https://github.com/DJones0101/COMP354/blob/master/a2/Prims.png)
 
 Answer the following questions:
 1. Compare what happens in Kruskal’s algorithm versus Prim’s algorithm if we run them
@@ -33,7 +33,7 @@ example of an application where negative costs may occur naturally.
 binary tree. Each node of the tree corresponds to an element in the array, as shown
 below:
 
-![alt text](https://github.com/DJones0101/COMP354/blob/master/a2/heap.png)
+![Heap](https://github.com/DJones0101/COMP354/blob/master/a2/heap.png)
 
 note that the array has the following interesting structure: the parent of i is bi/2c and
 the left child of i is 2i and the right child of i is (2i + 1).
