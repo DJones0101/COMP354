@@ -17,6 +17,17 @@ graph = {
 	"e":[("d",5), ("c",3)]
 }
 
+
+graphNoncon = {
+	"a":[("b",1), ("c",2)],
+	"b":[("c",1), ("d",4), ("a",1)],
+	"c":[("a",2), ("b",1), ("e",3), ("d",2)],
+	"d":[("b",4), ("c",2), ("e",5)],
+	"e":[("d",5), ("c",3)],
+	"f":[("g",-1)],
+	"g":[("f",-1)]
+}
+
 def prims(graph):
 
 	start = random.choice(list(graph)) 
@@ -35,7 +46,8 @@ def prims(graph):
 					hq.heappush(edges, (weight, to, to_next))
 	return T
 
-#def kruskals():
+def kruskals(graph):
+	pass
 
 
 def showGraph(graph):
