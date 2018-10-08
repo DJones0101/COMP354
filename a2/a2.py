@@ -28,26 +28,43 @@ graphNoncon = {
 	"g":[("f",-1)]
 }
 
+
 def prims(graph):
 
 	start = random.choice(list(graph)) 
 	T = defaultdict(list)
-	visited = set([start])
+	bookmark = set([start])
 	edges = [(weight, start, to) for to, weight, in graph[start]]
 	hq.heapify(edges)
 
 	while edges:
 		weight, frm, to = hq.heappop(edges)
-		if to not in visited:
-			visited.add(to)
+		if to not in bookmark:
+			bookmark.add(to)
 			T[frm].append(to)
 			for to_next, cost in graph[to]:
-				if to_next not in visited:
+				if to_next not in bookmark:
 					hq.heappush(edges, (weight, to, to_next))
 	return T
 
+
+
 def kruskals(graph):
-	pass
+
+	T = defaultdict(list)
+	edges = []
+	for frm, values in graph.items():
+		for to, weight in values:
+			edges.append((weight,frm,to))
+	edges = sorted(edges)
+	start = edges[0][1]
+	bookmark = [start]
+
+	for weight, frm, to in edges:
+		if to not in bookmark:
+			bookmark.append( to)
+			T[frm].append(to)
+	return T
 
 
 def showGraph(graph):
@@ -75,25 +92,25 @@ def showPath(graph, mcst):
 	# Colors the path of the mcst green
 
 	path = []
-	weightList = [] 
 	for frm, values in mcst.items():
 		for to in values:
 			path.append((frm,to))
 
 	mcstWeight = 0
+	weightList = []
 
 	G = nx.Graph()
 	for frm, values in graph.items():
 		for to, weight in values:
 			if (frm, to) in path:		
-				weightList.append(weight)
 				mcstWeight += weight
-				pass
+				weightList.append(weight)
 			G.add_edge(frm, to, color='black', weight=weight)
+
 
 	index = 0
 	for frm, to in path:
-		G.add_edge(frm, to, color='green', weight=weightList[index])
+		G.add_edge(frm, to, color='green')
 		index += 1
 
 	edges = G.edges()
@@ -107,17 +124,27 @@ def showPath(graph, mcst):
 	plt.draw()
 	plt.show()
 
-	print("Weight of the MCST is %d" %(mcstWeight))
+	return mcstWeight
 
 
 
 def main():
 
-	showGraph(graph)
-	mcst = prims(graph)
-	showPath(graph,mcst)
-	
 
+
+	showGraph(graph)
+	print("Kruskal's")
+	Kmcst = kruskals(graph)
+	print("Prim's")
+	Pmcst = prims(graph)
+
+	cost1 = showPath(graph,Kmcst)
+	cost2 = showPath(graph,Pmcst)
+
+	print("kruskal's  cost is %d " %(cost1),Kmcst)
+	print("Prims's cost is %d " %(cost2), Pmcst)
+
+	
 
 
 if __name__ == "__main__":
