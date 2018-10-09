@@ -56,6 +56,7 @@ def kruskals(graph):
 	for frm, values in graph.items():
 		for to, weight in values:
 			edges.append((weight,frm,to))
+
 	edges = sorted(edges)
 	start = edges[0][1]
 	bookmark = [start]
@@ -70,6 +71,7 @@ def kruskals(graph):
 def showGraph(graph):
 
 	G = nx.Graph()
+
 	for frm, values in graph.items():
 		for to, weight in values:
 			G.add_edge(frm, to, color='black', weight=weight)
@@ -108,10 +110,10 @@ def showPath(graph, mcst):
 			G.add_edge(frm, to, color='black', weight=weight)
 
 
-	index = 0
+
 	for frm, to in path:
 		G.add_edge(frm, to, color='green')
-		index += 1
+		
 
 	edges = G.edges()
 	colors = [G[frm][to]['color'] for frm,to in edges]	
@@ -133,16 +135,21 @@ def main():
 
 
 	showGraph(graph)
-	print("Kruskal's")
 	Kmcst = kruskals(graph)
-	print("Prim's")
 	Pmcst = prims(graph)
 
 	cost1 = showPath(graph,Kmcst)
 	cost2 = showPath(graph,Pmcst)
 
-	print("kruskal's  cost is %d " %(cost1),Kmcst)
-	print("Prims's cost is %d " %(cost2), Pmcst)
+	print("Kruskal's  cost is %d " %(cost1))
+	for frm, values in Kmcst.items():
+		for to in values:
+			print("%s ---> %s" %(frm, to))
+
+	print("Prims's cost is %d " %(cost2))
+	for frm, values in Pmcst.items():
+		for to in values:
+			print("%s ---> %s" %(frm, to))
 
 	
 
