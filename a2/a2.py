@@ -5,7 +5,11 @@
 # COMP 354
 # Python 3.6
 
-import heapq as hq, networkx as nx, matplotlib.pyplot as plt, random, pylab
+import heapq as hq
+import networkx as nx
+import matplotlib.pyplot as plt 
+import random
+import pylab
 from collections import defaultdict
 
 
@@ -24,8 +28,8 @@ graphNoncon = {
 	"c":[("a",2), ("b",1), ("e",3), ("d",2)],
 	"d":[("b",4), ("c",2), ("e",5)],
 	"e":[("d",5), ("c",3)],
-	"f":[("g",-1)],
-	"g":[("f",-1)]
+	"f":[("g",1)],
+	"g":[("f",1)]
 }
 
 
@@ -37,6 +41,8 @@ def prims(graph):
 	edges = [(weight, start, to) for to, weight, in graph[start]]
 	hq.heapify(edges)
 
+	
+	# the algorithm
 	while edges:
 		weight, frm, to = hq.heappop(edges)
 		if to not in bookmark:
@@ -61,9 +67,10 @@ def kruskals(graph):
 	start = edges[0][1]
 	bookmark = [start]
 
+	# the algorithm
 	for weight, frm, to in edges:
 		if to not in bookmark:
-			bookmark.append( to)
+			bookmark.append(to)
 			T[frm].append(to)
 	return T
 
@@ -133,7 +140,6 @@ def showPath(graph, mcst):
 def main():
 
 
-
 	showGraph(graph)
 	Kmcst = kruskals(graph)
 	Pmcst = prims(graph)
@@ -151,7 +157,6 @@ def main():
 		for to in values:
 			print("%s ---> %s" %(frm, to))
 
-	
 
 
 if __name__ == "__main__":
