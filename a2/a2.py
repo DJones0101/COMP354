@@ -5,12 +5,77 @@
 # COMP 354
 # Python 3.6
 
-import heapq as hq
-import networkx as nx
-import matplotlib.pyplot as plt 
-import random
+
 import pylab
 from collections import defaultdict
+#https://www.sanfoundry.com/java-program-implement-min-heap/
+
+
+class heap:	
+	'''
+	Maintains a heap. A list must be passed to the constructor
+	'''
+	def __init__(self):
+		self.size = 0
+		self.head = 1 
+
+		
+
+	def parent(index):
+		return (index / 2)
+	
+	def leftChild(index):
+		return (index * 2)
+
+	def rightChild(index):
+		return (index * 2) + 1
+
+	def isLeaf(index):
+
+		if(index >= (self.size/2) and index <= self.size):
+			return True
+		else:
+			return False
+
+	def swap(src, dest):
+		q[src], q[dest] = q[dest], q[src]
+
+	def heapify(index):
+		left = leftChild(index)
+		right = rightChild(index)
+
+		if isLeaf(index) == False:
+			if q[index][0] > q[left][0] or q[index][0] > q[right][0]:
+
+				if q[left][0] < q[right][0]:
+					swap(index, left)
+					self.heapify(left)
+				else:
+					swap(index, right)
+					self.heapify(index, left)
+	
+	def insert(element):
+		self.size += 1
+		q.append(element)
+		current = self.size
+
+		while q[current][0] < q[parent(current)][0]:
+			swap(current, parent(current))
+			current = parent(current)
+
+
+
+	def pop():
+		popped = q[self.head]
+		self.size -= 1
+		del q[self.head]
+		heapify(self.head)
+		return popped
+	
+	def printHeap():
+		print(q)
+
+
 
 
 graph = {
@@ -31,6 +96,17 @@ graphNoncon = {
 	"f":[("g",1)],
 	"g":[("f",1)]
 }
+
+# def quickSort(array):
+
+#     if len(array) < 2:
+#         return array
+#     else:
+#         pivot = random.choice(array)
+#         lessThanPivot = [index for index in array if index < pivot]
+#         equalToPivot = [index for index in array if index == pivot]
+#         greaterThanPivot = [index for index in array if index > pivot]
+#         return quickSort(lessThanPivot) + equalToPivot + quickSort(greaterThanPivot)
 
 
 def prims(graph):
@@ -74,88 +150,38 @@ def kruskals(graph):
 			T[frm].append(to)
 	return T
 
-
-def showGraph(graph):
-
-	G = nx.Graph()
-
-	for frm, values in graph.items():
-		for to, weight in values:
-			G.add_edge(frm, to, color='black', weight=weight)
-
-	edges = G.edges()
-	colors = [G[frm][to]['color'] for frm,to in edges]
-	
-	pos = nx.circular_layout(G)
-	pylab.figure(1)
-	nx.draw(G,pos,with_labels=True)
-	nx.draw(G, pos, edges=edges, edge_color=colors, width=3)
-	edge_labels = dict([((frm,to,),d['weight'])
-    for frm,to,d in G.edges(data=True)])
-	nx.draw_networkx_edge_labels(G,pos,edge_labels=edge_labels)	
-	plt.draw()
-	plt.show()
-
-
-def showPath(graph, mcst):
-	# Colors the path of the mcst green
-
-	path = []
-	for frm, values in mcst.items():
-		for to in values:
-			path.append((frm,to))
-
-	mcstWeight = 0
-	weightList = []
-
-	G = nx.Graph()
-	for frm, values in graph.items():
-		for to, weight in values:
-			if (frm, to) in path:		
-				mcstWeight += weight
-				weightList.append(weight)
-			G.add_edge(frm, to, color='black', weight=weight)
-
-
-
-	for frm, to in path:
-		G.add_edge(frm, to, color='green')
-		
-
-	edges = G.edges()
-	colors = [G[frm][to]['color'] for frm,to in edges]	
-	pos = nx.circular_layout(G)
-	nx.draw(G,pos,with_labels=True)
-	edge_labels = dict([((frm,to,),d['weight'])
-    for frm,to,d in G.edges(data=True)])
-	nx.draw_networkx_edge_labels(G,pos,edge_labels=edge_labels)	
-	nx.draw(G, pos, edges=edges, edge_color=colors, width=3)
-	plt.draw()
-	plt.show()
-
-	return mcstWeight
-
-
-
 def main():
 
+	gList = []
 
-	showGraph(graph)
-	Kmcst = kruskals(graph)
-	Pmcst = prims(graph)
+	hq = heap()
+	for frm, values in graph.items():
+		for to, weight in values:
+			gList.append((weight, frm, to))
+	# for i in gList:
+	# 	hq.insert(gList[i])
+	for i in range(len(gList)):
+		print(gList[i][0])
 
-	cost1 = showPath(graph,Kmcst)
-	cost2 = showPath(graph,Pmcst)
 
-	print("Kruskal's  cost is %d " %(cost1))
-	for frm, values in Kmcst.items():
-		for to in values:
-			print("%s ---> %s" %(frm, to))
 
-	print("Prims's cost is %d " %(cost2))
-	for frm, values in Pmcst.items():
-		for to in values:
-			print("%s ---> %s" %(frm, to))
+	# showGraph(graph)
+	# Kmcst = kruskals(graphNoncon)
+	# Pmcst = prims(graphNoncon)
+
+	# cost1 = showPath(graph,Kmcst)
+	# cost2 = showPath(graph,Pmcst)
+
+	# print("Kruskal's  cost is %d " %(cost1))
+	# for frm, values in Kmcst.items():
+	# 	for to in values:
+	# 		print("%s ---> %s" %(frm, to))
+
+	# print("Prims's cost is %d " %(cost2))
+	# for frm, values in Pmcst.items():
+	# 	for to in values:
+	# 		print("%s ---> %s" %(frm, to))
+	pass
 
 
 
