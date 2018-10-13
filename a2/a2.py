@@ -5,7 +5,6 @@
 # COMP 354
 # Python 3.6
 
-import heapq as hq # make your own heap
 import pdb
 import networkx as nx 
 import matplotlib.pyplot as plt 
@@ -20,6 +19,8 @@ class BinaryHeap(object):
 
     def __len__(self):
         return len(self.items) - 1
+    def size(self):
+    	return len(self.items) - 1
 
     def percolate_up(self):
         i = len(self)
@@ -49,7 +50,6 @@ class BinaryHeap(object):
         return i * 2 + 1
 
     def del_min(self):
-    	print(self.items)
     	return_value = self.items[1]
     	self.items[1] = self.items[len(self)]
     	self.items.pop()
@@ -80,9 +80,11 @@ def prims(graph):
 	bookmark = set([start])
 	edges = [(weight, start, to) for to, weight, in graph[start]]
 	h = BinaryHeap()
+	for weight, frm, to in edges:
+		h.insert((weight, frm, to))
 
-	# The algorithm
-	while h.__len__() > 0 :
+	#the algorithm
+	while h.size() > 0 :
 		#pdb.set_trace()
 		weight, frm, to = h.del_min()
 
@@ -108,7 +110,7 @@ def kruskals(graph):
 	start = edges[0][1]
 	bookmark = [start]
 
-	# The algorithm
+	#The algorithm 
 	for weight, frm, to in edges:
 		if to not in bookmark:
 			bookmark.append( to)
