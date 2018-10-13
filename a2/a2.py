@@ -5,8 +5,63 @@
 # COMP 354
 # Python 3.6
 
-import heapq as hq, networkx as nx, matplotlib.pyplot as plt, random, pylab
+import heapq as hq # make your own heap
+import pdb
+import networkx as nx 
+import matplotlib.pyplot as plt 
+import random 
+import pylab
 from collections import defaultdict
+
+
+class BinaryHeap(object):
+    def __init__(self):
+        self.items = [0]
+
+    def __len__(self):
+        return len(self.items) - 1
+
+    def percolate_up(self):
+        i = len(self)
+        while i // 2 > 0:
+            if self.items[i] < self.items[i // 2]:
+                self.items[i // 2], self.items[i] = \
+                    self.items[i], self.items[i // 2]
+            i = i // 2
+
+    def insert(self, k):
+        self.items.append(k)
+        self.percolate_up()
+
+    def percolate_down(self, i):
+        while i * 2 <= len(self):
+            mc = self.min_child(i)
+            if self.items[i] > self.items[mc]:
+                self.items[i], self.items[mc] = self.items[mc], self.items[i]
+            i = mc
+
+    def min_child(self, i):
+        if i * 2 + 1 > len(self):
+            return i * 2
+
+        if self.items[i * 2] < self.items[i * 2 + 1]:
+            return i * 2
+        return i * 2 + 1
+
+    def del_min(self):
+    	print(self.items)
+    	return_value = self.items[1]
+    	self.items[1] = self.items[len(self)]
+    	self.items.pop()
+    	self.percolate_down(1)
+    	return return_value
+
+    def build_heap(self, alist):
+    	i = len(alist) // 2
+    	self.items = [0] + alist
+    	while i > 0:
+    		self.percolate_down(i)
+    		i -= 1
 
 
 graph = {
@@ -18,33 +73,28 @@ graph = {
 }
 
 
-graphNoncon = {
-	"a":[("b",1), ("c",2)],
-	"b":[("c",1), ("d",4), ("a",1)],
-	"c":[("a",2), ("b",1), ("e",3), ("d",2)],
-	"d":[("b",4), ("c",2), ("e",5)],
-	"e":[("d",5), ("c",3)],
-	"f":[("g",-1)],
-	"g":[("f",-1)]
-}
-
-
 def prims(graph):
 
 	start = random.choice(list(graph)) 
 	T = defaultdict(list)
 	bookmark = set([start])
 	edges = [(weight, start, to) for to, weight, in graph[start]]
-	hq.heapify(edges)
+	h = BinaryHeap()
+	for weight, frm, to in edges:
+		h.insert((weight, frm, to))
 
-	while edges:
-		weight, frm, to = hq.heappop(edges)
+
+	while h.__len__() > 0 :
+		#pdb.set_trace()
+		weight, frm, to = h.del_min()
+
 		if to not in bookmark:
 			bookmark.add(to)
 			T[frm].append(to)
 			for to_next, cost in graph[to]:
 				if to_next not in bookmark:
-					hq.heappush(edges, (weight, to, to_next))
+					h.insert((weight, to, to_next))
+
 	return T
 
 
@@ -108,10 +158,9 @@ def showPath(graph, mcst):
 			G.add_edge(frm, to, color='black', weight=weight)
 
 
-	index = 0
 	for frm, to in path:
 		G.add_edge(frm, to, color='green')
-		index += 1
+	
 
 	edges = G.edges()
 	colors = [G[frm][to]['color'] for frm,to in edges]	
@@ -130,19 +179,17 @@ def showPath(graph, mcst):
 
 def main():
 
-
-
 	showGraph(graph)
-	print("Kruskal's")
-	Kmcst = kruskals(graph)
-	print("Prim's")
+
 	Pmcst = prims(graph)
+	showPath(graph, Pmcst)
 
-	cost1 = showPath(graph,Kmcst)
-	cost2 = showPath(graph,Pmcst)
+	for frm, values in Pmcst.items():
+		for to in values:
+			print("%s --> %s" %(frm,to))
 
-	print("kruskal's  cost is %d " %(cost1),Kmcst)
-	print("Prims's cost is %d " %(cost2), Pmcst)
+
+	
 
 	
 
