@@ -77,7 +77,7 @@ def prims(graph):
 
 	start = random.choice(list(graph)) 
 	T = defaultdict(list)
-	bookmark = set([start])
+	bookmark = ([start])
 	edges = [(weight, start, to) for to, weight, in graph[start]]
 	h = BinaryHeap()
 	for weight, frm, to in edges:
@@ -89,7 +89,7 @@ def prims(graph):
 		weight, frm, to = h.del_min()
 
 		if to not in bookmark:
-			bookmark.add(to)
+			bookmark.append(to)
 			T[frm].append(to)
 			for to_next, cost in graph[to]:
 				if to_next not in bookmark:
