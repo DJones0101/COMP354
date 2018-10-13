@@ -80,10 +80,8 @@ def prims(graph):
 	bookmark = set([start])
 	edges = [(weight, start, to) for to, weight, in graph[start]]
 	h = BinaryHeap()
-	for weight, frm, to in edges:
-		h.insert((weight, frm, to))
 
-
+	# The algorithm
 	while h.__len__() > 0 :
 		#pdb.set_trace()
 		weight, frm, to = h.del_min()
@@ -110,6 +108,7 @@ def kruskals(graph):
 	start = edges[0][1]
 	bookmark = [start]
 
+	# The algorithm
 	for weight, frm, to in edges:
 		if to not in bookmark:
 			bookmark.append( to)
@@ -188,10 +187,6 @@ def main():
 		for to in values:
 			print("%s --> %s" %(frm,to))
 
-
-	
-
-	
 
 
 if __name__ == "__main__":
