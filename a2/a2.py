@@ -13,16 +13,18 @@ import pylab
 from collections import defaultdict
 
 
-class BinaryHeap(object):
+class HeapQ(object):
+
     def __init__(self):
         self.items = [0]
 
     def __len__(self):
         return len(self.items) - 1
+
     def size(self):
     	return len(self.items) - 1
 
-    def percolate_up(self):
+    def floatUP(self):
         i = len(self)
         while i // 2 > 0:
             if self.items[i] < self.items[i // 2]:
@@ -30,18 +32,18 @@ class BinaryHeap(object):
                     self.items[i], self.items[i // 2]
             i = i // 2
 
-    def insert(self, k):
+    def pushElement(self, k):
         self.items.append(k)
-        self.percolate_up()
+        self.floatUP()
 
-    def percolate_down(self, i):
+    def sinkDown(self, i):
         while i * 2 <= len(self):
-            mc = self.min_child(i)
+            mc = self.minChild(i)
             if self.items[i] > self.items[mc]:
                 self.items[i], self.items[mc] = self.items[mc], self.items[i]
             i = mc
 
-    def min_child(self, i):
+    def minChild(self, i):
         if i * 2 + 1 > len(self):
             return i * 2
 
@@ -49,18 +51,18 @@ class BinaryHeap(object):
             return i * 2
         return i * 2 + 1
 
-    def del_min(self):
+    def popElement(self):
     	return_value = self.items[1]
     	self.items[1] = self.items[len(self)]
     	self.items.pop()
-    	self.percolate_down(1)
+    	self.sinkDown(1)
     	return return_value
 
-    def build_heap(self, alist):
-    	i = len(alist) // 2
-    	self.items = [0] + alist
+    def heapify(self, listn):
+    	i = len(listn) // 2
+    	self.items = [0] + listn
     	while i > 0:
-    		self.percolate_down(i)
+    		self.sinkDown(i)
     		i -= 1
 
 
@@ -76,24 +78,24 @@ graph = {
 def prims(graph):
 
 	start = random.choice(list(graph)) 
-	T = defaultdict(list)
-	bookmark = ([start])
 	edges = [(weight, start, to) for to, weight, in graph[start]]
-	h = BinaryHeap()
+	h = HeapQ()
 	for weight, frm, to in edges:
-		h.insert((weight, frm, to))
+		h.pushElement((weight, frm, to))
 
 	#the algorithm
-	while h.size() > 0 :
-		#pdb.set_trace()
-		weight, frm, to = h.del_min()
+	T = defaultdict(list)
+	bookmark = [start]
 
+	while h.size() > 0 :
+		#pdb.set_trace() 
+		weight, frm, to = h.popElement()
 		if to not in bookmark:
 			bookmark.append(to)
 			T[frm].append(to)
 			for to_next, cost in graph[to]:
 				if to_next not in bookmark:
-					h.insert((weight, to, to_next))
+					h.pushElement((weight, to, to_next))
 
 	return T
 
@@ -107,10 +109,11 @@ def kruskals(graph):
 		for to, weight in values:
 			edges.append((weight,frm,to))
 	edges = sorted(edges)
-	start = edges[0][1]
-	bookmark = [start]
 
 	#The algorithm 
+	start = edges[0][1]
+	bookmark = [start]
+	
 	for weight, frm, to in edges:
 		if to not in bookmark:
 			bookmark.append( to)
