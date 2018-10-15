@@ -33,7 +33,7 @@ Kruskal and Prim's algorithm are both excellent at finding minimum cost spanning
 2. Adapt Prim’s algorithm to graphs that may include edges of negative costs; give an
 example of an application where negative costs may occur naturally.
 
-Prim's algorithm is useful in many real worlds situations. One example that comes to mind is in logistics. Transporting goods by truck requires load and unloading items onto trucks. The total weight of the truck plus its cargo affects the efficiency of its engine. If we look at this scenario in the form of a graph, we can have positive edges where the truck adds cargo increasing its weight. Negative edges could represent the truck delivering its cargo. A logistics company would benefit from Prim's algorithm in this situation. The company would be able to choose the MCST to save on expenses related to maintenance and fuel cost.
+Prim's algorithm is useful in many real worlds situations. One example that comes to mind is in logistics. Transporting goods by truck requires loading and unloading items onto trucks. The total weight of the truck plus its cargo affects the efficiency of its engine. If we look at this scenario in the form of a graph, we can have positive edges where the truck adds cargo increasing its weight. Negative edges could represent the truck delivering its cargo reducing its weight. A logistics company would benefit from Prim's algorithm in this situation. The company would be able to choose the MCST to save on expenses related to maintenance and fuel cost.
 
 
 3. A binary heap data structure is an array that we can view naturally as a nearly complete
