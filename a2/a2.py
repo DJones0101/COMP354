@@ -11,7 +11,6 @@ import matplotlib.pyplot as plt
 import random 
 import pylab
 from collections import defaultdict
-#https://www.sanfoundry.com/java-program-implement-min-heap/
 
 
 class HeapQ(object):
@@ -109,7 +108,6 @@ def kruskals(graph):
 	for frm, values in graph.items():
 		for to, weight in values:
 			edges.append((weight,frm,to))
-
 	edges = sorted(edges)
 
 	#The algorithm 
@@ -118,42 +116,50 @@ def kruskals(graph):
 	
 	for weight, frm, to in edges:
 		if to not in bookmark:
-			bookmark.append(to)
+			bookmark.append( to)
 			T[frm].append(to)
 	return T
 
-def main():
 
-	gList = []
+def showGraph(graph):
 
-	hq = heap()
+	G = nx.Graph()
 	for frm, values in graph.items():
 		for to, weight in values:
-			gList.append((weight, frm, to))
-	# for i in gList:
-	# 	hq.insert(gList[i])
-	for i in range(len(gList)):
-		print(gList[i][0])
+			G.add_edge(frm, to, color='black', weight=weight)
+
+	edges = G.edges()
+	colors = [G[frm][to]['color'] for frm,to in edges]
+	
+	pos = nx.circular_layout(G)
+	pylab.figure(1)
+	nx.draw(G,pos,with_labels=True)
+	nx.draw(G, pos, edges=edges, edge_color=colors, width=3)
+	edge_labels = dict([((frm,to,),d['weight'])
+    for frm,to,d in G.edges(data=True)])
+	nx.draw_networkx_edge_labels(G,pos,edge_labels=edge_labels)	
+	plt.draw()
+	plt.show()
 
 
+def showPath(graph, mcst):
+	# Colors the path of the mcst green
 
-	# showGraph(graph)
-	# Kmcst = kruskals(graphNoncon)
-	# Pmcst = prims(graphNoncon)
+	path = []
+	for frm, values in mcst.items():
+		for to in values:
+			path.append((frm,to))
 
-	# cost1 = showPath(graph,Kmcst)
-	# cost2 = showPath(graph,Pmcst)
+	mcstWeight = 0
+	weightList = []
 
-	# print("Kruskal's  cost is %d " %(cost1))
-	# for frm, values in Kmcst.items():
-	# 	for to in values:
-	# 		print("%s ---> %s" %(frm, to))
-
-	# print("Prims's cost is %d " %(cost2))
-	# for frm, values in Pmcst.items():
-	# 	for to in values:
-	# 		print("%s ---> %s" %(frm, to))
-	pass
+	G = nx.Graph()
+	for frm, values in graph.items():
+		for to, weight in values:
+			if (frm, to) in path:		
+				mcstWeight += weight
+				weightList.append(weight)
+			G.add_edge(frm, to, color='black', weight=weight)
 
 
 	for frm, to in path:
