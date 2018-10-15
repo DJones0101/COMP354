@@ -5,77 +5,66 @@
 # COMP 354
 # Python 3.6
 
-
+import pdb
+import networkx as nx 
+import matplotlib.pyplot as plt 
+import random 
 import pylab
 from collections import defaultdict
 #https://www.sanfoundry.com/java-program-implement-min-heap/
 
 
-class heap:	
-	'''
-	Maintains a heap. A list must be passed to the constructor
-	'''
-	def __init__(self):
-		self.size = 0
-		self.head = 1 
+class HeapQ(object):
 
-		
+    def __init__(self):
+        self.items = [0]
 
-	def parent(index):
-		return (index / 2)
-	
-	def leftChild(index):
-		return (index * 2)
+    def __len__(self):
+        return len(self.items) - 1
 
-	def rightChild(index):
-		return (index * 2) + 1
+    def size(self):
+    	return len(self.items) - 1
 
-	def isLeaf(index):
+    def floatUP(self):
+        i = len(self)
+        while i // 2 > 0:
+            if self.items[i] < self.items[i // 2]:
+                self.items[i // 2], self.items[i] = \
+                    self.items[i], self.items[i // 2]
+            i = i // 2
 
-		if(index >= (self.size/2) and index <= self.size):
-			return True
-		else:
-			return False
+    def pushElement(self, k):
+        self.items.append(k)
+        self.floatUP()
 
-	def swap(src, dest):
-		q[src], q[dest] = q[dest], q[src]
+    def sinkDown(self, i):
+        while i * 2 <= len(self):
+            mc = self.minChild(i)
+            if self.items[i] > self.items[mc]:
+                self.items[i], self.items[mc] = self.items[mc], self.items[i]
+            i = mc
 
-	def heapify(index):
-		left = leftChild(index)
-		right = rightChild(index)
+    def minChild(self, i):
+        if i * 2 + 1 > len(self):
+            return i * 2
 
-		if isLeaf(index) == False:
-			if q[index][0] > q[left][0] or q[index][0] > q[right][0]:
+        if self.items[i * 2] < self.items[i * 2 + 1]:
+            return i * 2
+        return i * 2 + 1
 
-				if q[left][0] < q[right][0]:
-					swap(index, left)
-					self.heapify(left)
-				else:
-					swap(index, right)
-					self.heapify(index, left)
-	
-	def insert(element):
-		self.size += 1
-		q.append(element)
-		current = self.size
+    def popElement(self):
+    	return_value = self.items[1]
+    	self.items[1] = self.items[len(self)]
+    	self.items.pop()
+    	self.sinkDown(1)
+    	return return_value
 
-		while q[current][0] < q[parent(current)][0]:
-			swap(current, parent(current))
-			current = parent(current)
-
-
-
-	def pop():
-		popped = q[self.head]
-		self.size -= 1
-		del q[self.head]
-		heapify(self.head)
-		return popped
-	
-	def printHeap():
-		print(q)
-
-
+    def heapify(self, listn):
+    	i = len(listn) // 2
+    	self.items = [0] + listn
+    	while i > 0:
+    		self.sinkDown(i)
+    		i -= 1
 
 
 graph = {
@@ -87,46 +76,28 @@ graph = {
 }
 
 
-graphNoncon = {
-	"a":[("b",1), ("c",2)],
-	"b":[("c",1), ("d",4), ("a",1)],
-	"c":[("a",2), ("b",1), ("e",3), ("d",2)],
-	"d":[("b",4), ("c",2), ("e",5)],
-	"e":[("d",5), ("c",3)],
-	"f":[("g",1)],
-	"g":[("f",1)]
-}
-
-# def quickSort(array):
-
-#     if len(array) < 2:
-#         return array
-#     else:
-#         pivot = random.choice(array)
-#         lessThanPivot = [index for index in array if index < pivot]
-#         equalToPivot = [index for index in array if index == pivot]
-#         greaterThanPivot = [index for index in array if index > pivot]
-#         return quickSort(lessThanPivot) + equalToPivot + quickSort(greaterThanPivot)
-
-
 def prims(graph):
 
 	start = random.choice(list(graph)) 
-	T = defaultdict(list)
-	bookmark = set([start])
 	edges = [(weight, start, to) for to, weight, in graph[start]]
-	hq.heapify(edges)
+	h = HeapQ()
+	for weight, frm, to in edges:
+		h.pushElement((weight, frm, to))
 
-	
-	# the algorithm
-	while edges:
-		weight, frm, to = hq.heappop(edges)
+	#the algorithm
+	T = defaultdict(list)
+	bookmark = [start]
+
+	while h.size() > 0 :
+		#pdb.set_trace() 
+		weight, frm, to = h.popElement()
 		if to not in bookmark:
-			bookmark.add(to)
+			bookmark.append(to)
 			T[frm].append(to)
 			for to_next, cost in graph[to]:
 				if to_next not in bookmark:
-					hq.heappush(edges, (weight, to, to_next))
+					h.pushElement((weight, to, to_next))
+
 	return T
 
 
@@ -140,10 +111,11 @@ def kruskals(graph):
 			edges.append((weight,frm,to))
 
 	edges = sorted(edges)
+
+	#The algorithm 
 	start = edges[0][1]
 	bookmark = [start]
-
-	# the algorithm
+	
 	for weight, frm, to in edges:
 		if to not in bookmark:
 			bookmark.append(to)
@@ -182,6 +154,37 @@ def main():
 	# 	for to in values:
 	# 		print("%s ---> %s" %(frm, to))
 	pass
+
+
+	for frm, to in path:
+		G.add_edge(frm, to, color='green')
+	
+
+	edges = G.edges()
+	colors = [G[frm][to]['color'] for frm,to in edges]	
+	pos = nx.circular_layout(G)
+	nx.draw(G,pos,with_labels=True)
+	edge_labels = dict([((frm,to,),d['weight'])
+    for frm,to,d in G.edges(data=True)])
+	nx.draw_networkx_edge_labels(G,pos,edge_labels=edge_labels)	
+	nx.draw(G, pos, edges=edges, edge_color=colors, width=3)
+	plt.draw()
+	plt.show()
+
+	return mcstWeight
+
+
+
+def main():
+
+	showGraph(graph)
+
+	Pmcst = prims(graph)
+	showPath(graph, Pmcst)
+
+	for frm, values in Pmcst.items():
+		for to in values:
+			print("%s --> %s" %(frm,to))
 
 
 
