@@ -68,10 +68,8 @@ The output above shows the property is maintained as tuples are pushed and poppe
 Knowing this information and studying how Prim's algorithm works allowed us to realize that the arbitrary starting point will be a node and the heap should be filled with all of the other nodes connecting to it. The starting node and its connecting components are pushed onto the heap before the while loop is executed. We keep a list called bookmark to keep track of the nodes that are visited. The starting is initially placed in the bookmark list before the while loop is executed. Inside the while loop, we pop from the heap and thanks to the heap the weight can be ignored, so we focus on the frm and to nodes. If the to node is not in the bookmark list we add it to the bookmark list. Since we are returning the MCST as a dictionary we use frm as a key and we add "to" to that key's list.  Prim's algorithm considers the lowest edges of the connected components to be added next. The for loop adds the components to the heap and keeping with the heap's property they are floated up to the top of the heap if they are the smallest. This allows the smallest edge of the non-bookmarked components to always be selected. 
 To fully understand what the algorithm was doing we use the networkx library to visualize the graph before and after the algorithm was run. The graph's edges are initially black the resulting MCST's edges are green.
 
-![Original Graph](https://github.com/DJones0101/COMP354/blob/master/a2/graph.png)
-
-![MCST](https://github.com/DJones0101/COMP354/blob/master/a2/p.png&s=200)
-<img src="https://github.com/DJones0101/COMP354/blob/master/a2/p.png" width="100" height="100">
+<img src="https://github.com/DJones0101/COMP354/blob/master/a2/graph.png" width="400" height="400">
+<img src="https://github.com/DJones0101/COMP354/blob/master/a2/p.png" width="400" height="400">
 
 	|Prim's  | 
 	|:-------|  
