@@ -70,15 +70,11 @@ To fully understand what the algorithm was doing we use the networkx library to 
 
 <img src="https://github.com/DJones0101/COMP354/blob/master/a2/graph.png" width="400" height="400"> <img src="https://github.com/DJones0101/COMP354/blob/master/a2/p.png" width="400" height="400">
 
-	|Prim's  | 
-	|:-------|  
-	|b --> a|
-	|:-------|
-	|b --> c|
-	|:-------|
-	|c --> d|
-	|:-------|
-	|c --> e|
+	>Prim's  
+	>b --> a
+	>b --> c
+	>c --> d
+	>c --> e
 	
 
 
