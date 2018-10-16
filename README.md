@@ -72,11 +72,16 @@ To fully understand what the algorithm was doing we use the networkx library to 
 
 ![MCST](https://github.com/DJones0101/COMP354/blob/master/a2/p.png)
 
-Prim's   
-	b --> a             
-	b --> c
-	c --> d
-	c --> e
+	|Prim's| 
+	--------  
+	|b --> a|
+	---------
+	|b --> c|
+	---------
+	|c --> d|
+	---------
+	|c --> e|
+	---------
 
 
 
