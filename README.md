@@ -54,14 +54,14 @@ Describe the details of the above scheme, and implement it in Python 3
 
 We created a class named HeapQ, to encapsulate the heap and its functionality. This class consists of a list initialized with a placeholder in the first slot.  The placeholder's purpose is to simplify the math for the methods in the class. For example, the placeholder will occupy the first slot in the list that way we can place the first element in the heap in slot 1. Accessing the right child would be index 2(1) and accessing the left child would be 2(1)+1. Since Prim's algorithm returns an MCST, this implementation is a min heap. A min-heap maintains the property each node is greater than or equal to the value of its parent node; keeping the smallest value at the root. 
 
-(weight, frm, to)
-[(1, 'c', 'b'), (2, 'c', 'a'), (3, 'c', 'e'), (2, 'c', 'd')]
-[(1, 'b', 'a'), (1, 'b', 'd'), (3, 'c', 'e'), (2, 'c', 'd'), (2, 'c', 'a')]
-[(1, 'b', 'd'), (2, 'c', 'a'), (3, 'c', 'e'), (2, 'c', 'd')]
-[(1, 'd', 'e'), (2, 'c', 'a'), (3, 'c', 'e'), (2, 'c', 'd')]
-[(2, 'c', 'a'), (2, 'c', 'd'), (3, 'c', 'e')]
-[(2, 'c', 'd'), (3, 'c', 'e')]
-[(3, 'c', 'e')]
+> (weight, frm, to)
+> [(1, 'c', 'b'), (2, 'c', 'a'), (3, 'c', 'e'), (2, 'c', 'd')]
+> [(1, 'b', 'a'), (1, 'b', 'd'), (3, 'c', 'e'), (2, 'c', 'd'), (2, 'c', 'a')]
+> [(1, 'b', 'd'), (2, 'c', 'a'), (3, 'c', 'e'), (2, 'c', 'd')]
+> [(1, 'd', 'e'), (2, 'c', 'a'), (3, 'c', 'e'), (2, 'c', 'd')]
+> [(2, 'c', 'a'), (2, 'c', 'd'), (3, 'c', 'e')]
+> [(2, 'c', 'd'), (3, 'c', 'e')]
+> [(3, 'c', 'e')]
 
 The output above shows the property is maintained as tuples are pushed and popped from the heap. When an element is pushed onto the heap it is added to the end of the list then it is checked to see if can be floated up the heap. The root is checked first and if this value is less than the root it is then swapped. This procedure repeats until the newly pushed element is placed in its correct slot in the list. Popping an element from the heap in some cases breaks the property of maintaining the smallest value at the root. Since we will always pop the first value in the list we will check if that new root's value holds the property. If it doesn't it needs to sink down to its correct place in the list.  We compare the root it's minimum child and if it's larger we swap those values. The min heap is very useful in the implementation of Prim's algorithm because it keeps the smallest weighted edge at the root of the tree and every time you pop from the heap its the smallest value.  
 
@@ -69,11 +69,11 @@ Knowing this information and studying how Prim's algorithm works allowed us to r
 
 <img src="https://github.com/DJones0101/COMP354/blob/master/a2/graph.png" width="400" height="400"> <img src="https://github.com/DJones0101/COMP354/blob/master/a2/p.png" width="400" height="400">
 
-	>Prim's  
-	>b --> a
-	>b --> c
-	>c --> d
-	>c --> e
+>	Prim's  
+>	b --> a
+>	b --> c
+>	c --> d
+>	c --> e
 	
 
 
