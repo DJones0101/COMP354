@@ -71,6 +71,7 @@ To fully understand what the algorithm was doing we use the networkx library to 
 ![Original Graph](https://github.com/DJones0101/COMP354/blob/master/a2/graph.png)
 
 ![MCST](https://github.com/DJones0101/COMP354/blob/master/a2/p.png&s=200)
+<img src="https://github.com/DJones0101/COMP354/blob/master/a2/p.png" width="100" height="100">
 
 	|Prim's  | 
 	|:-------|  
