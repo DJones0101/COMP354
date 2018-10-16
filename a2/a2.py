@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
 # Darius Jones
-# 10/2/2018
+# Chad Bloor
+# Gerardo Carillo
+# 10/16/2018
 # COMP 354
 # Python 3.6
 
@@ -24,46 +26,45 @@ class HeapQ(object):
     def size(self):
     	return len(self.items) - 1
 
-    def floatUP(self):
-        i = len(self)
-        while i // 2 > 0:
-            if self.items[i] < self.items[i // 2]:
-                self.items[i // 2], self.items[i] = \
-                    self.items[i], self.items[i // 2]
-            i = i // 2
+    def floatUp(self):
+        index = len(self)
+        while index  // 2 > 0:
+            if self.items[index] < self.items[index  // 2]:
+                self.swap(index // 2, index)
+            index  = index  // 2
 
-    def pushElement(self, k):
-        self.items.append(k)
-        self.floatUP()
+    def pushElement(self, element):
+        self.items.append(element)
+        self.floatUp()
 
-    def sinkDown(self, i):
-        while i * 2 <= len(self):
-            mc = self.minChild(i)
-            if self.items[i] > self.items[mc]:
-                self.items[i], self.items[mc] = self.items[mc], self.items[i]
-            i = mc
+    def swap(self, index1, index2):
+    	self.items[index1], self.items[index2] = self.items[index2], self.items[index1]
 
-    def minChild(self, i):
-        if i * 2 + 1 > len(self):
-            return i * 2
 
-        if self.items[i * 2] < self.items[i * 2 + 1]:
-            return i * 2
-        return i * 2 + 1
+    def sinkDown(self, index):
+        while index * 2 <= len(self):
+            minChild = self.minChild(index)
+            if self.items[index] > self.items[minChild]:
+                self.swap(index,minChild)
+            index = minChild
+
+    def minChild(self, index):
+        if index * 2 + 1 > len(self):
+            return index * 2
+
+        if self.items[index * 2] < self.items[index * 2 + 1]:
+            return index * 2
+        return index * 2 + 1
 
     def popElement(self):
-    	return_value = self.items[1]
+    	retVal = self.items[1]
     	self.items[1] = self.items[len(self)]
     	self.items.pop()
     	self.sinkDown(1)
-    	return return_value
+    	return retVal
 
-    def heapify(self, listn):
-    	i = len(listn) // 2
-    	self.items = [0] + listn
-    	while i > 0:
-    		self.sinkDown(i)
-    		i -= 1
+    def printHeap(self):
+    	print(self.items[1:])
 
 
 graph = {
@@ -88,6 +89,7 @@ def prims(graph):
 	bookmark = [start]
 
 	while h.size() > 0 :
+		#h.printHeap()
 		#pdb.set_trace() 
 		weight, frm, to = h.popElement()
 		if to not in bookmark:
@@ -95,7 +97,8 @@ def prims(graph):
 			T[frm].append(to)
 			for to_next, cost in graph[to]:
 				if to_next not in bookmark:
-					h.pushElement((weight, to, to_next))
+					#print("to = %s, to_next = %s, weight = %d  " %(to,to_next, cost))
+					h.pushElement((cost, to, to_next))
 
 	return T
 
@@ -110,13 +113,13 @@ def kruskals(graph):
 			edges.append((weight,frm,to))
 	edges = sorted(edges)
 
-	#The algorithm 
+	
 	start = edges[0][1]
 	bookmark = [start]
 	
 	for weight, frm, to in edges:
 		if to not in bookmark:
-			bookmark.append( to)
+			bookmark.append(to)
 			T[frm].append(to)
 	return T
 
