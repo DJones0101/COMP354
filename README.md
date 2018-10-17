@@ -29,8 +29,13 @@ Answer the following questions:
 on a graph that is not connected.
 
 Kruskal and Prim's algorithm are both excellent at finding minimum cost spanning trees. Kruskal's algorithm selects the smallest edges in such a way that doesn't create a cycle. Prim's algorithm takes a more natural approach.  Prim's starts with an arbitrary starting point and selects the smallest edges in such a way that doesn't create a cycle. Then it moves to the next node and repeats until every node is explored.  Both algorithms work on the premise that the given graph is connected. When Kruskal's encounters a non-connected graph, it will return two MCSTs because of it blindly selecting the smallest edges while avoiding cycles. When Prim's is given a non- connected graph, it will return a single MCST. Unlike Kruskal's Prim's moves from node to node exploring the possible edges, This makes it impossible for non-connected nodes to be reached.
-<img src="https://github.com/DJones0101/COMP354/blob/master/a2/graph1.png" width="400" height="400"> 
-<img src="https://github.com/DJones0101/COMP354/blob/master/a2/k1.png" width="400" height="400"><img src="https://github.com/DJones0101/COMP354/blob/master/a2/p1.png" width="400" height="400">
+
+
+
+<img src="https://github.com/DJones0101/COMP354/blob/master/a2/graph1.png" width="400" height="400">
+
+<img src="https://github.com/DJones0101/COMP354/blob/master/a2/k1.png" width="400" height="400">
+<img src="https://github.com/DJones0101/COMP354/blob/master/a2/p1.png" width="400" height="400">
 
 
 |                                          Prim's                                         |			|            Kruskal's            |
