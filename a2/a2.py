@@ -75,6 +75,18 @@ graph = {
 	"e":[("d",5), ("c",3)]
 }
 
+graph1 = {
+	"a":[("b",1), ("c",2)],
+	"b":[("c",1), ("d",4), ("a",1)],
+	"c":[("a",2), ("b",1), ("e",3), ("d",2)],
+	"d":[("b",4), ("c",2), ("e",5)],
+	"e":[("d",5), ("c",3)],
+	"f":[("g", 1),("h",5)],
+	"g":[("f",1),("h",2)],
+	"h":[("f",5),("g",2)]
+}
+
+
 
 def prims(graph):
 
@@ -121,6 +133,7 @@ def kruskals(graph):
 		if to not in bookmark:
 			bookmark.append(to)
 			T[frm].append(to)
+			#print(T)
 	return T
 
 
@@ -186,7 +199,28 @@ def showPath(graph, mcst):
 
 def main():
 
+
+	showGraph(graph1)
+
+
+	Pmcst = prims(graph1)
+	showPath(graph1, Pmcst)
+	for frm, values in Pmcst.items():
+		for to in values:
+			print("%s --> %s" %(frm,to))
+
+
+	Kmcst = kruskals(graph1)
+	showPath(graph1, Kmcst)
+	for frm, values in Kmcst.items():
+		for to in values:
+			print("%s --> %s" %(frm,to))
+
+
+	print("-" * 50)
+
 	showGraph(graph)
+
 
 	Pmcst = prims(graph)
 	showPath(graph, Pmcst)

@@ -29,11 +29,22 @@ Answer the following questions:
 on a graph that is not connected.
 
 Kruskal and Prim's algorithm are both excellent at finding minimum cost spanning trees. Kruskal's algorithm selects the smallest edges in such a way that doesn't create a cycle. Prim's algorithm takes a more natural approach.  Prim's starts with an arbitrary starting point and selects the smallest edges in such a way that doesn't create a cycle. Then it moves to the next node and repeats until every node is explored.  Both algorithms work on the premise that the given graph is connected. When Kruskal's encounters a non-connected graph, it will return two MCSTs because of it blindly selecting the smallest edges while avoiding cycles. When Prim's is given a non- connected graph, it will return a single MCST. Unlike Kruskal's Prim's moves from node to node exploring the possible edges, This makes it impossible for non-connected nodes to be reached.
+<img src="https://github.com/DJones0101/COMP354/blob/master/a2/graph1.png" width="400" height="400"> 
+<img src="https://github.com/DJones0101/COMP354/blob/master/a2/k1.png" width="400" height="400"><img src="https://github.com/DJones0101/COMP354/blob/master/a2/p1.png" width="400" height="400">
+
+
+|                                          Prim's                                         |			|            Kruskal's            |
+|:-------------------------------:|
+| e --> c c --> b c --> d b --> a |
+|:---------------------------------------------------------------------------------------:|
+| b --> a b --> c c --> d c --> e a --> b b --> c f --> g g --> f g --> h c --> d c --> e |                  
+
 
 2. Adapt Prim’s algorithm to graphs that may include edges of negative costs; give an
 example of an application where negative costs may occur naturally.
 
 Prim's algorithm is useful in many real worlds situations. One example that comes to mind is in logistics. Transporting goods by truck requires loading and unloading items onto trucks. The total weight of the truck plus its cargo affects the efficiency of its engine. If we look at this scenario in the form of a graph, we can have positive edges where the truck adds cargo increasing its weight. Negative edges could represent the truck delivering its cargo reducing its weight. A logistics company would benefit from Prim's algorithm in this situation. The company would be able to choose the MCST to save on expenses related to maintenance and fuel cost.
+
 
 
 3. A binary heap data structure is an array that we can view naturally as a nearly complete
