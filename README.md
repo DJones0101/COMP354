@@ -32,14 +32,10 @@ Kruskal and Prim's algorithm are both excellent at finding minimum cost spanning
 
 
 
-<img src="https://github.com/DJones0101/COMP354/blob/master/a2/graph1.png" width="300" height="300"><img src="https://github.com/DJones0101/COMP354/blob/master/a2/k1.png" width="300" height="300"><img src="https://github.com/DJones0101/COMP354/blob/master/a2/p1.png" width="300" height="300">
+<img src="https://github.com/DJones0101/COMP354/blob/master/a2/graph1.png" width="300" height="300">
+<img src="https://github.com/DJones0101/COMP354/blob/master/a2/k1.png" width="300" height="300"><img src="https://github.com/DJones0101/COMP354/blob/master/a2/p1.png" width="300" height="300">
 
-
-|                                          Prim's                                         |			|            Kruskal's            |
-|:-------------------------------:|
-| e --> c c --> b c --> d b --> a |
-|:---------------------------------------------------------------------------------------:|
-| b --> a b --> c c --> d c --> e a --> b b --> c f --> g g --> f g --> h c --> d c --> e |                  
+               
 
 
 2. Adapt Prim’s algorithm to graphs that may include edges of negative costs; give an
