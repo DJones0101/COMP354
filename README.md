@@ -32,10 +32,7 @@ Kruskal and Prim's algorithm are both excellent at finding minimum cost spanning
 
 
 
-<img src="https://github.com/DJones0101/COMP354/blob/master/a2/graph1.png" width="400" height="400">
-
-<img src="https://github.com/DJones0101/COMP354/blob/master/a2/k1.png" width="400" height="400">
-<img src="https://github.com/DJones0101/COMP354/blob/master/a2/p1.png" width="400" height="400">
+<img src="https://github.com/DJones0101/COMP354/blob/master/a2/graph1.png" width="400" height="400"><img src="https://github.com/DJones0101/COMP354/blob/master/a2/k1.png" width="400" height="400"><img src="https://github.com/DJones0101/COMP354/blob/master/a2/p1.png" width="400" height="400">
 
 
 |                                          Prim's                                         |			|            Kruskal's            |
