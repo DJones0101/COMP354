@@ -124,6 +124,7 @@ def kruskals(graph):
 		for to, weight in values:
 			edges.append((weight,frm,to))
 	edges = sorted(edges)
+	#edges = edges[::-1]
 
 	
 	start = edges[0][1]
@@ -209,6 +210,7 @@ def main():
 		for to in values:
 			print("%s --> %s" %(frm,to))
 
+	print("-" * 50)
 
 	Kmcst = kruskals(graph1)
 	showPath(graph1, Kmcst)
