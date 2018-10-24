@@ -19,13 +19,27 @@ graph = {
 }
 
 
-def kruskals(graph):	
+def createGraph(input):
+	# takes a input file, adjacency matrix for a file and turns it into a dictionary
+	# needs work 
+	with open('input.txt', 'r') as file:
+    	columns = next(f).split()
+    	graph = defaultdict(list)
+    	for line in file:
+        	items = line.split()
+        	row, vals = items[0], items[1:]
+        	for col, val in zip(columns, vals):
+            	matrix[col].append(int(val))
+return graph
+
+def kruskals(graph):
+
 	edges = []
 	for frm, values in graph.items():
 		for to, weight in values:
 			edges.append((weight,frm,to))
 	edges = sorted(edges)
-	#edges = edges[::-1]  #this makes it a Max Cost Spanning Tree
+	#edges = edges[::-1]  #reversing to non-increasing makes it a Max Cost Spanning Tree
 
 	start = edges[0][1]
 	bookmark = [start]
@@ -40,10 +54,9 @@ def kruskals(graph):
 
 
 def showGraph(graph, mcst=None):
-	path = []
-	weightList = []
-
+	
 	if mcst != None:
+		path = []
 		for frm, values in mcst.items():
 			for to in values:
 				path.append((frm,to))
@@ -51,8 +64,6 @@ def showGraph(graph, mcst=None):
 	G = nx.Graph()
 	for frm, values in graph.items():
 		for to, weight in values:
-			if (frm, to) in path and mcst != None:		
-				weightList.append(weight)
 			G.add_edge(frm, to, color='black', weight=weight)
 
 	if mcst != None:	
