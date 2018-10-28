@@ -16,7 +16,7 @@ def lms(sequnce):
 
 		result.append(maxCount +1)
 
-	result = set(result) 
+	#result = set(result) 
 	return result
 
 
