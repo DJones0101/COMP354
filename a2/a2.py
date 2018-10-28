@@ -138,16 +138,25 @@ def kruskals(graph):
 	return T
 
 
-def showGraph(graph):
+def showGraph(graph, mcst=None):
+	
+	if mcst != None:
+		path = []
+		for frm, values in mcst.items():
+			for to in values:
+				path.append((frm,to))
 
 	G = nx.Graph()
 	for frm, values in graph.items():
 		for to, weight in values:
 			G.add_edge(frm, to, color='black', weight=weight)
 
+	if mcst != None:	
+		for frm, to in path:
+			G.add_edge(frm, to, color='green')
+
 	edges = G.edges()
 	colors = [G[frm][to]['color'] for frm,to in edges]
-	
 	pos = nx.circular_layout(G)
 	pylab.figure(1)
 	nx.draw(G,pos,with_labels=True)
@@ -159,43 +168,6 @@ def showGraph(graph):
 	plt.show()
 
 
-def showPath(graph, mcst):
-	# Colors the path of the mcst green
-
-	path = []
-	for frm, values in mcst.items():
-		for to in values:
-			path.append((frm,to))
-
-	mcstWeight = 0
-	weightList = []
-
-	G = nx.Graph()
-	for frm, values in graph.items():
-		for to, weight in values:
-			if (frm, to) in path:		
-				mcstWeight += weight
-				weightList.append(weight)
-			G.add_edge(frm, to, color='black', weight=weight)
-
-
-	for frm, to in path:
-		G.add_edge(frm, to, color='green')
-	
-
-	edges = G.edges()
-	colors = [G[frm][to]['color'] for frm,to in edges]	
-	pos = nx.circular_layout(G)
-	nx.draw(G,pos,with_labels=True)
-	edge_labels = dict([((frm,to,),d['weight'])
-    for frm,to,d in G.edges(data=True)])
-	nx.draw_networkx_edge_labels(G,pos,edge_labels=edge_labels)	
-	nx.draw(G, pos, edges=edges, edge_color=colors, width=3)
-	plt.draw()
-	plt.show()
-
-	return mcstWeight
-
 
 
 def main():
@@ -205,7 +177,7 @@ def main():
 
 
 	Pmcst = prims(graph1)
-	showPath(graph1, Pmcst)
+	showGraph(graph1, Pmcst)
 	for frm, values in Pmcst.items():
 		for to in values:
 			print("%s --> %s" %(frm,to))
@@ -213,7 +185,7 @@ def main():
 	print("-" * 50)
 
 	Kmcst = kruskals(graph1)
-	showPath(graph1, Kmcst)
+	showGraph(graph1, Kmcst)
 	for frm, values in Kmcst.items():
 		for to in values:
 			print("%s --> %s" %(frm,to))
@@ -225,7 +197,7 @@ def main():
 
 
 	Pmcst = prims(graph)
-	showPath(graph, Pmcst)
+	showGraph(graph, Pmcst)
 
 	for frm, values in Pmcst.items():
 		for to in values:
