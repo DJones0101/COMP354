@@ -1,5 +1,6 @@
 # Darius Jones
 # 10/27/2018 
+# Longest Monotone Subsequnce
 
 def lms(sequnce):
 		
