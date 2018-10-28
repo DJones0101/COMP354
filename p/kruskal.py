@@ -15,22 +15,22 @@ graph = {
 	"b":[("c",1), ("d",4), ("a",1)],
 	"c":[("a",2), ("b",1), ("e",3), ("d",2)],
 	"d":[("b",4), ("c",2), ("e",5)],
-	"e":[("d",5), ("c",3)]
+	"e":[("d",5), ("c",3)],
 }
 
 
 def createGraph(input):
-	# takes a input file, adjacency matrix for a file and turns it into a dictionary
-	# needs work 
-	with open('input.txt', 'r') as file:
-    	columns = next(f).split()
-    	graph = defaultdict(list)
-    	for line in file:
-        	items = line.split()
-        	row, vals = items[0], items[1:]
-        	for col, val in zip(columns, vals):
-            	matrix[col].append(int(val))
-return graph
+	# needs work
+	graph = defaultdict(list)
+	nodes=[]
+	with open(input, 'r') as file:
+		content = file.readlines()
+		nodes = list(content[0])
+		nodes = filter(lambda char:char.strip(), nodes)
+
+		for lines in content:
+			for i in range(len(lines)):
+
 
 def kruskals(graph):
 
@@ -39,7 +39,6 @@ def kruskals(graph):
 		for to, weight in values:
 			edges.append((weight,frm,to))
 	edges = sorted(edges)
-	#edges = edges[::-1]  #reversing to non-increasing makes it a Max Cost Spanning Tree
 
 	start = edges[0][1]
 	bookmark = [start]
@@ -84,12 +83,13 @@ def showGraph(graph, mcst=None):
 
 
 def main():
-	showGraph(graph)
-	mcst = kruskals(graph)
-	for frm, listn in mcst.items():
-		for to in listn:
-			print("%s ---> %s" %(frm,to))
-	showGraph(graph,mcst)
+	# showGraph(graph)
+	# mcst = kruskals(graph)
+	# for frm, listn in mcst.items():
+	# 	for to in listn:
+	# 		print("%s ---> %s" %(frm,to))
+	# showGraph(graph,mcst)
+	createGraph('input.txt')
 
 
 
