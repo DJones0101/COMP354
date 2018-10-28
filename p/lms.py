@@ -1,4 +1,5 @@
-
+# Darius Jones
+# 10/27/2018 
 
 def lms(sequnce):
 		
