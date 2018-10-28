@@ -16,12 +16,12 @@ the lower-left node is represented with (0, 0) and the upper-right node is repre
 <img src="https://github.com/DJones0101/COMP354/blob/master/a3/image/image1.png">
 
 Note that both edges may be present, and this in turn introduces an exponential number of
-choices if the search were to be done na¨ıvely. A path starts at (0, 0), and the i-th time it goes up we pick xi, and the j-th time it goes right we pick yj . Thus, a path from (0, 0) to (|x|, |y|) represents a particular shuffle.
-For example, consider Figure 1. On the left we have a shuffle of 000 and 111 that yields
-010101, and on the right we have a shuffle of 011 and 011 that yields 001111. The left
-instance has a unique shuffle that yields 010101, which corresponds to the unique path from
-(0, 0) to (3, 3). On the right, there are several possible shuffles of 011, 011 that yield 001111
-— in fact, eight of them, each corresponding to a distinct path from (0, 0) to (3, 3).
+choices if the search were to be done na¨ıvely. A path starts at (0, 0), and the i-th time it goes up we pick xi, and the j-th time it goes right we pick yj . Thus, a path from ```(0, 0) to (|x|, |y|)``` represents a particular shuffle.
+For example, consider Figure 1. On the left we have a shuffle of ```000 and 111``` that yields
+```010101```, and on the right we have a shuffle of 011 and 011 that yields 001111. The left
+instance has a unique shuffle that yields ```010101```, which corresponds to the unique path from
+```(0, 0) to (3, 3)```. On the right, there are several possible shuffles of``` 011, 011``` that yield ```001111```
+— in fact, eight of them, each corresponding to a distinct path from ```(0, 0) to (3, 3)```.
 
 A dynamic programming algorithm computes partial solutions along the top-left to bottomright
 diagonal lines in the grid graph.
