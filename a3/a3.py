@@ -5,10 +5,6 @@
 # COMP 354
 # Python 3.6
 
-# Dynamic programming computes a data structure of partial soluions.
-# We need to create a grid, which represents these partial solutions.
-# So, I'm guessing the highlighted equation on page 86 explains much of the algorithm.
-# I just don't know how to translate that into code at the moment.
 
 import numpy as np
 import pandas as pd
@@ -18,19 +14,43 @@ def isShuffle(u,v,w):
 
 	row = len(u) + 1
 	column = len(v) + 1
-	grid = np.zeros(shape=(row,column))
 
-def showGrid(grid):
+	assert (row-1) + (column-1) == len(w)
+
+	grid = np.full(shape=(row,column),fill_value=False,dtype=bool)
+
+	for i in range(row):
+		if u[:i] == w[:i]:
+			grid[i,0]=True
+
+	for j in range(column):
+		if v[:j] == w[:j]:
+			grid[0,j] = True
+
+	for i in range(row):
+		for j in range(column):
+			if grid[i-1,j] == True and w[:i+j-1] + u[i-1] == w[:i+j]:
+				grid[i,j] = True
+			elif grid[i,j-1] == True and w[:i+j-1] + v[j-1] == w[:i+j]:
+				grid[i,j] = True
+
+
 	print(pd.DataFrame(grid))
 
-	
+	if False in grid.diagonal():
+		return False
+
+	return True
 
 
 def main():
-	u = "000"
-	v = "111"
-	w = "010101"
-	isShuffle(u,v,w)
+
+	u = "01101110"
+	v = "10101000"
+	w = "0110110011101000"
+	result = isShuffle(u,v,w)
+
+	print(f"Is w a Shuffle ? {result}")
 
 
 if __name__ == '__main__':
