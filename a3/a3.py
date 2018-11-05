@@ -10,12 +10,14 @@ import numpy as np
 import pandas as pd
 
 
-def isShuffle(u,v,w):
+def shuffle(u,v,w):
 
 	row = len(u) + 1
 	column = len(v) + 1
+	result  =  len(w)
 
-	assert (row-1) + (column-1) == len(w)
+	if (row-1) + (column-1) != result:
+		raise Exception(f" |u| + |v| = |w| : {row-1} + {column-1} != {result}")
 
 	grid = np.full(shape=(row,column),fill_value=False,dtype=bool)
 
@@ -34,23 +36,21 @@ def isShuffle(u,v,w):
 			elif grid[i,j-1] == True and w[:i+j-1] + v[j-1] == w[:i+j]:
 				grid[i,j] = True
 
-
 	print(pd.DataFrame(grid))
+	print("\n")
 
-	if False in grid.diagonal():
-		return False
-
-	return True
+	return "No" if False in grid.diagonal() else "Yes"
 
 
 def main():
 
-	u = "01101110"
-	v = "10101000"
-	w = "0110110011101000"
-	result = isShuffle(u,v,w)
-
-	print(f"Is w a Shuffle ? {result}")
+	# u = ""
+	# v = ""
+	# w = ""
+	# answer = shuffle(u,v,w)
+	# print("\n")
+	# print(f"Is {u} and {v} a shuffle of {w} ? {answer}")
+	pass
 
 
 if __name__ == '__main__':
