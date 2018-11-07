@@ -13,7 +13,7 @@ import pandas as pd
 
 class Test_a3(unittest.TestCase):
 
-	''' Test cases from the Assignment 3 PDF'''
+	# Test cases from the Assignment 3 PDF
 
 	def test_case1(self):
 		self.assertEqual(shuffle("01101110","10101000","0110110011101000"), "Yes")
@@ -24,12 +24,22 @@ class Test_a3(unittest.TestCase):
 	def test_case3(self):
 		self.assertEqual(shuffle("011","011","001111"), "Yes")
 
-	''' Test cases we made came up with'''
-	# def test_case4(self):
-	# 	self.assertEqual(shuffle("111","000","110010"), "Yes") # Why does this fail?
+	# Test cases we made came up with
 
-	# def test_case5(self):
-	# 	self.assertEqual(shuffle("1111","0000","11001100"), "Yes") #Why does this fail?
+	def test_case4(self):
+	 	self.assertEqual(shuffle("111","000","110010"), "Yes") 
+
+	def test_case5(self):
+		self.assertEqual(shuffle("0000","1111","00110011"), "Yes") 
+
+	def test_case6(self):
+		self.assertEqual(shuffle("0000","0101","00010001"), "Yes")
+
+	def test_case7(self):
+		self.assertEqual(shuffle("0001","0101","00010101"), "Yes")
+
+	def test_case8(self):
+		self.assertEqual(shuffle("00011","01011","0001010111"), "Yes")
 
 
 def shuffle(u,v,w):
@@ -41,6 +51,7 @@ def shuffle(u,v,w):
 	if (row-1) + (column-1) != result:
 		raise Exception(f" |u| + |v| = |w| : {row-1} + {column-1} != {result}")
 
+	# The Algorithm
 	grid = np.full(shape=(row,column),fill_value=False,dtype=bool)
 
 	for i in range(row):
@@ -59,26 +70,36 @@ def shuffle(u,v,w):
 				grid[i,j] = True
 
 	print(pd.DataFrame(grid))
-	print(f"List of diagonals from top left to bottom right: {getDiagonals(grid)}")
 	print("\n")
 
-	return "No" if False in grid.diagonal() else "Yes"
+	diagonals = getDiagonals(grid)
+	
+	return "No" if isShuffle(diagonals) == False else "Yes"
 
 def getDiagonals(grid):
-	#https://stackoverflow.com/questions/6313308/get-all-the-diagonals-in-a-matrix-list-of-lists-in-python
-	row = grid.shape[0]
-	column = grid.shape[1]
-	gridSize = (row * column)
-	halfGridsize = gridSize/2
 
-	listn = [grid.diagonal(i) for i in range( -1, halfGridsize )]
+	row = grid.shape[0]
+	return [grid.diagonal(i) for i in range(-(row-1), 1)]
+
+def isShuffle(diagonals):
+
+	for i in range(len(diagonals)):
+
+		listSize = len(diagonals[i])
+		trueCounter = 0
+
+		for k in range(listSize):
+			if diagonals[i][k] == True:
+				trueCounter += 1
+
+		if trueCounter == listSize:
+			return True
+
+	return False
+
 
 if __name__ == '__main__':
 
-	shuffle("000","111","010101")
-	#shuffle("111","000","110010")
-	#shuffle("1111","0000","11001100")
-	#unittest.main()
-
+	unittest.main()
 
 
