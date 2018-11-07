@@ -24,7 +24,7 @@ class Test_a3(unittest.TestCase):
 	def test_case3(self):
 		self.assertEqual(shuffle("011","011","001111"), "Yes")
 
-	# Test cases we made came up with
+	# Test cases we came up with
 
 	def test_case4(self):
 	 	self.assertEqual(shuffle("111","000","110010"), "Yes") 
