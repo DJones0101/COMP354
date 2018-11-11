@@ -82,7 +82,7 @@ def isshuffle(u,v,w):
 
 def getDiagonals(grid):
 
-	"""Takes in a grid, retruns a list of diagonals  from the bottom 
+	"""Takes in a grid, returns a list of diagonals  from the bottom 
 	right to the main diagonal"""
 
 	row = grid.shape[0]
