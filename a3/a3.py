@@ -55,11 +55,15 @@ def isshuffle(u,v,w):
 	grid = np.full(shape=(row,column),fill_value=False,dtype=bool)
 
 	for i in range(row):
+
 		if u[:i] == w[:i]:
+
 			grid[i,0] = True
 
 	for j in range(column):
+
 		if v[:j] == w[:j]:
+
 			grid[0,j] = True
 
 	for i in range(row):
@@ -78,20 +82,18 @@ def isshuffle(u,v,w):
 	print(pd.DataFrame(grid))
 	print("\n")
 	
-	return "No" if isShuffle(getDiagonals(grid)) == False else "Yes"
+	return "Yes" if isShuffle(grid) == True else "No"
+
 
 def getDiagonals(grid):
-
-	"""Takes in a grid, returns a list of diagonals  from the bottom 
-	right to the main diagonal"""
 
 	row = grid.shape[0]
 	return [grid.diagonal(i) for i in range(-(row-1), 1)]
 
-def isShuffle(diagonals):
 
-	"""Takes in a list of a list diagonal elements from a grid, returns true if one 
-	of the list of diagonals contains all True elements"""
+def isShuffle(grid):
+
+	diagonals = getDiagonals(grid)
 
 	for i in range(len(diagonals)):
 
