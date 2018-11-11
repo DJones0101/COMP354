@@ -16,33 +16,33 @@ class Test_a3(unittest.TestCase):
 	# Test cases from the Assignment 3 PDF
 
 	def test_case1(self):
-		self.assertEqual(isshuffle("01101110","10101000","0110110011101000"), "Yes")
+		self.assertEqual(isShuffle("01101110","10101000","0110110011101000"), "Yes")
 
 	def test_case2(self):
-		self.assertEqual(isshuffle("000","111","010101"), "Yes")
+		self.assertEqual(isShuffle("000","111","010101"), "Yes")
 
 	def test_case3(self):
-		self.assertEqual(isshuffle("011","011","001111"), "Yes")
+		self.assertEqual(isShuffle("011","011","001111"), "Yes")
 
 	# Test cases we came up with
 
 	def test_case4(self):
-	 	self.assertEqual(isshuffle("111","000","110010"), "Yes") 
+	 	self.assertEqual(isShuffle("111","000","110010"), "Yes") 
 
 	def test_case5(self):
-		self.assertEqual(isshuffle("0000","1111","00110011"), "Yes") 
+		self.assertEqual(isShuffle("0000","1111","00110011"), "Yes") 
 
 	def test_case6(self):
-		self.assertEqual(isshuffle("0000","0101","00010001"), "Yes")
+		self.assertEqual(isShuffle("0000","0101","00010001"), "Yes")
 
 	def test_case7(self):
-		self.assertEqual(isshuffle("0001","0101","00010101"), "Yes")
+		self.assertEqual(isShuffle("0001","0101","00010101"), "Yes")
 
 	def test_case8(self):
-		self.assertEqual(isshuffle("00011","01011","0001010111"), "Yes")
+		self.assertEqual(isShuffle("00011","01011","0001010111"), "Yes")
 	
 
-def isshuffle(u,v,w):
+def isShuffle(u,v,w):
 
 	row = len(u) + 1
 	column = len(v) + 1
@@ -82,7 +82,7 @@ def isshuffle(u,v,w):
 	print(pd.DataFrame(grid))
 	print("\n")
 	
-	return "Yes" if isShuffle(grid) == True else "No"
+	return "Yes" if shuffle(grid) == True else "No"
 
 
 def getDiagonals(grid):
@@ -91,7 +91,7 @@ def getDiagonals(grid):
 	return [grid.diagonal(i) for i in range(-(row-1), 1)]
 
 
-def isShuffle(grid):
+def shuffle(grid):
 
 	diagonals = getDiagonals(grid)
 
