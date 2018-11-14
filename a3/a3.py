@@ -90,12 +90,41 @@ def isShuffle(u,v,w):
 	print(pd.DataFrame(grid))
 	print("\n")
 	
+<<<<<<< HEAD
 	return "Yes" if grid[row-1,column-1]== True else "No"
+=======
+	return "Yes" if shuffle(grid) == True else "No"
+
+>>>>>>> master
 
 
+<<<<<<< HEAD
 def main():
 	q = isShuffle("aab", "axy", "aaxaby")
 	print(q)
+=======
+	row = grid.shape[0]
+	return [grid.diagonal(i) for i in range(-(row-1), 1)]
+
+
+def shuffle(grid):
+
+	diagonals = getDiagonals(grid)
+
+	for i in range(len(diagonals)):
+
+		listSize = len(diagonals[i])
+		trueCounter = 0
+
+		for k in range(listSize):
+			if diagonals[i][k] == True:
+				trueCounter += 1
+
+		if trueCounter == listSize:
+			return True
+
+	return False
+>>>>>>> master
 
 
 if __name__ == '__main__':
