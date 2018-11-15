@@ -87,7 +87,7 @@ def display(grid,u,v,w):
 
 	print(f"\n u: {u} v: {v}  w: {w} \n")
 	u = "ε" + u
-	v =  v + "ε" 
+	v =  v[::-1] + "ε" 
 	grid = np.rot90(grid)
 	display = pd.DataFrame(data=grid, columns=list(u),index=list(v))
 	print(display,"\n")
