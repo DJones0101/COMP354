@@ -13,38 +13,38 @@ import pandas as pd
 
 class Test_a3(unittest.TestCase):
 
-	# # Test cases from the Assignment 3 PDF
+	# Test cases from the Assignment 3 PDF
 
-	# def test_case1(self):
-	# 	self.assertEqual(isShuffle("01101110","10101000","0110110011101000"), "Yes")
+	def test_case1(self):
+		self.assertEqual(shuffle("01101110","10101000","0110110011101000"), "Yes")
 
-	# def test_case2(self):
-	# 	self.assertEqual(isShuffle("000","111","010101"), "Yes")
+	def test_case2(self):
+		self.assertEqual(shuffle("000","111","010101"), "Yes")
 
-	# def test_case3(self):
-	# 	self.assertEqual(isShuffle("011","011","001111"), "Yes")
+	def test_case3(self):
+		self.assertEqual(shuffle("011","011","001111"), "Yes")
 
-	# # Test cases we came up with
+	# Test cases we came up with
 
-	# def test_case4(self):
-	#  	self.assertEqual(isShuffle("111","000","110010"), "Yes") 
+	def test_case4(self):
+	 	self.assertEqual(shuffle("111","000","110010"), "Yes") 
 
-	# def test_case5(self):
-	# 	self.assertEqual(isShuffle("0000","1111","00110011"), "Yes") 
+	def test_case5(self):
+		self.assertEqual(shuffle("0000","1111","00110011"), "Yes") 
 
-	# def test_case6(self):
-	# 	self.assertEqual(isShuffle("0000","0101","00010001"), "Yes")
+	def test_case6(self):
+		self.assertEqual(shuffle("0000","0101","00010001"), "Yes")
 
-	# def test_case7(self):
-	# 	self.assertEqual(isShuffle("0001","0101","00010101"), "Yes")
+	def test_case7(self):
+		self.assertEqual(shuffle("0001","0101","00010101"), "Yes")
 
-	# def test_case8(self):
-	# 	self.assertEqual(isShuffle("00011","01011","0001010111"), "Yes")
-	
 	def test_case8(self):
-	 	self.assertEqual(isShuffle("11","00","1100"), "Yes")
+		self.assertEqual(shuffle("00011","01011","0001010111"), "Yes")
+	
+	def test_case9(self):
+	 	self.assertEqual(shuffle("11","00","1100"), "Yes")
 
-def isShuffle(u,v,w):
+def shuffle(u,v,w):
 
 	row = len(u)+1
 	column = len(v)+1
@@ -57,7 +57,6 @@ def isShuffle(u,v,w):
 	grid = np.full(shape=(row,column),fill_value=False,dtype=bool)
 
 	for i in range(row):
-
 
 		if v[:i] == w[:i]:
 			grid[0,i] = True
@@ -79,17 +78,19 @@ def isShuffle(u,v,w):
 
 				grid[i,j] = True
 
-	display(grid,u,v)
+	display(grid,u,v,w)
 
 	return "Yes" if grid[row-1,column-1]== True else "No"
 
-def display(grid,u,v):
-	#https://stackoverflow.com/questions/9535954/printing-lists-as-tabular-data
+
+def display(grid,u,v,w):
+
+	print(f"\n u: {u} v: {v}  w: {w} \n")
+	u = "ε" + u
+	v =  v + "ε" 
 	grid = np.rot90(grid)
-
-
-	
-
+	display = pd.DataFrame(data=grid, columns=list(u),index=list(v))
+	print(display,"\n")
 
 if __name__ == '__main__':
 
