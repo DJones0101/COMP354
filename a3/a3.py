@@ -89,7 +89,7 @@ def display(grid,u,v,w):
 	u = "ε" + u
 	v =  v[::-1] + "ε" 
 	grid = np.rot90(grid)
-	display = pd.DataFrame(data=grid, columns=list(u),index=list(v))
+	display = pd.DataFrame(data=grid, columns=list(u),index=None)
 	print(display,"\n")
 
 if __name__ == '__main__':
