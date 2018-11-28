@@ -3,7 +3,7 @@
 # Darius Jones
 # Chad Bloor
 # Gerardo Carillo
-# 11/10/2018
+# 11/17/2018
 # COMP 354
 # Python 3.6
 
@@ -89,7 +89,7 @@ def display(grid,u,v,w):
 	u = "ε" + u
 	v =  v[::-1] + "ε" 
 	grid = np.rot90(grid)
-	display = pd.DataFrame(data=grid, columns=list(u),index=None)
+	display = pd.DataFrame(data=grid, columns=list(u),index=list(v))
 	print(display,"\n")
 
 if __name__ == '__main__':
